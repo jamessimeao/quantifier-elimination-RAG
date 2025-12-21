@@ -9,7 +9,7 @@ int compute_signed_remainder_sequence(ca_poly_t * SRemS, ca_poly_t P, ca_poly_t 
 
     if(P_is_zero == T_UNKNOWN || Q_is_zero == T_UNKNOWN)
     {
-        printf("Error in compute_signed_remainder_sequence couldn't check if P or Q is 0.");fflush(stdout);
+        printf("Error in compute_signed_remainder_sequence: couldn't check if P or Q is 0.");fflush(stdout);
         return -1;
     }
 
