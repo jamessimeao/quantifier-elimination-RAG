@@ -1,4 +1,4 @@
-#include "../include/signed-remainder.h"
+#include "../include/signed-remainder.hpp"
 
 // It assumes that SRemS is an array big enough to store the signed remainder sequence.
 // Code must be changed to allocate memory as needed.

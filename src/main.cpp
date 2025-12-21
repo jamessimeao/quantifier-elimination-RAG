@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../include/signed-remainder.h"
+#include "../include/signed-remainder.hpp"
 
 int main()
 {

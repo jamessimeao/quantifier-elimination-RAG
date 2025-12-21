@@ -1,10 +1,10 @@
-CC = gcc
-CFLAGS = -ggdb
+CXX = g++
+CXXFLAGS = -ggdb
 LD_LIBS = -lflint
 SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = .
-SRC = $(wildcard $(SRC_DIR)/*.c)
+SRC = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 EXE = $(BIN_DIR)/main
 
@@ -13,10 +13,10 @@ EXE = $(BIN_DIR)/main
 all: $(EXE)
 
 $(EXE): $(OBJ) | $(BIN_DIR)
-	$(CC) -o $(EXE) $(OBJ) $(LD_LIBS)
+	$(CXX) -o $(EXE) $(OBJ) $(LD_LIBS)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(OBJ_DIR) $(BIN_DIR):
 	mkdir -p $@
