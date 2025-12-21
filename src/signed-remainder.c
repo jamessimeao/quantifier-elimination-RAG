@@ -44,33 +44,36 @@ int compute_signed_remainder_sequence(ca_poly_t * SRemS, ca_poly_t P, ca_poly_t 
     int k = 1;
     while(1)
     {
-        ca_poly_t remainder;
-        ca_poly_init(remainder, ctx);
+        ca_poly_t signed_remainder;
+        ca_poly_init(signed_remainder, ctx);
 
-        int success = ca_poly_rem(remainder, SRemS[k-1], SRemS[k], ctx);
+        int success = ca_poly_rem(signed_remainder, SRemS[k-1], SRemS[k], ctx);
         if(!success)
         {
             printf("Error in compute_signed_remainder_sequence: failed to compute remainder.");
         }
 
-        truth_t zero_remainder = ca_poly_check_is_zero(remainder, ctx);
+        truth_t zero_remainder = ca_poly_check_is_zero(signed_remainder, ctx);
         switch(zero_remainder)
         {
             case(T_UNKNOWN):
                 printf("Error in compute_signed_remainder_sequence: failed to check if remainder is zero.");
-                ca_poly_clear(remainder, ctx);
+                ca_poly_clear(signed_remainder, ctx);
                 return -1;
 
             case(T_FALSE):
                 //ca_poly_vec_append(SRemS, remainder, ctx); ca_poly_vec is incomplete
                 k++;
-                ca_poly_set(SRemS[k], remainder, ctx);
+                // multiply the remainder by -1
+                ca_poly_neg(signed_remainder, signed_remainder, ctx);
+                // add the signed remainder to SRemS
+                ca_poly_set(SRemS[k], signed_remainder, ctx);
                 break;
 
             case(T_TRUE):
                 // Clear the zero remainder, because it was not added to SRemS.
                 // SRemS will be responsible for clearing the polynomials it stores.
-                ca_poly_clear(remainder, ctx);
+                ca_poly_clear(signed_remainder, ctx);
                 // Then return k, which is the index of the last non zero polynomial in SRemS.
                 return k;
         }
