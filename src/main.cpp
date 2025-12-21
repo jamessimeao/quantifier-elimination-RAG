@@ -3,7 +3,9 @@
 
 #include "../include/signed-remainder.hpp"
 
-int main()
+
+/*
+void test_SRemS()
 {
     ca_ctx_t ctx;
     ca_ctx_init(ctx);
@@ -67,6 +69,23 @@ int main()
     ca_ctx_clear(ctx);
 
     printf("Finished.\n");fflush(stdout);
+}
+*/
+
+#include "../include/poly.hpp"
+
+int main()
+{
+    CtxXX ctxXX;
+
+    CaXX x = CaXX(ctxXX);
+    x.set_si(5);
+    x.println();
+
+    PolyXX P = PolyXX(ctxXX);
+    P.set_coeff(0,x);
+    P.set_coeff(3,x);
+    P.println();
 
     return 0;
 }
