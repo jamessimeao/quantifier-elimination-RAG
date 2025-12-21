@@ -54,12 +54,19 @@ int main()
     }
 
     // Clearing
-    // Don't bother clearing SRemS, because code will change
+    printf("Clearing...\n");fflush(stdout);
+    ca_poly_clear(SRemS[0],ctx);
+    ca_poly_clear(SRemS[1],ctx);
+    ca_poly_clear(SRemS[2],ctx);
+    free(SRemS);
+
     ca_poly_clear(P, ctx);
     ca_poly_clear(Q, ctx);
     ca_clear(one, ctx);
     ca_clear(two, ctx);
     ca_ctx_clear(ctx);
+
+    printf("Finished.\n");fflush(stdout);
 
     return 0;
 }
