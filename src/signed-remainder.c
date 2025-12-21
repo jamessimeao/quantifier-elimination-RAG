@@ -1,0 +1,78 @@
+#include "../include/signed-remainder.h"
+
+// It assumes that SRemS is an array big enough to store the signed remainder sequence.
+// Code must be changed to allocate memory as needed.
+int compute_signed_remainder_sequence(ca_poly_t * SRemS, ca_poly_t P, ca_poly_t Q, ca_ctx_t ctx)
+{
+    truth_t P_is_zero = ca_poly_check_is_zero(P, ctx);
+    truth_t Q_is_zero = ca_poly_check_is_zero(Q, ctx);
+
+    if(P_is_zero == T_UNKNOWN || Q_is_zero == T_UNKNOWN)
+    {
+        printf("Error in compute_signed_remainder_sequence couldn't check if P or Q is 0.");
+        return -1;
+    }
+
+    if(P_is_zero == T_TRUE && Q_is_zero == T_TRUE)
+    {
+        printf("Error in compute_signed_remainder_sequence: both P and Q are 0.");
+        return -1;
+    }
+
+    // Here we know if P and Q are 0 or not, and that not both are 0.
+
+    // Empty SRemS
+    //ca_poly_vec_set_length(SRemS,0,ctx); ca_poly_vec is incomplete
+
+    // Add the first polynomial of SRemS, which is P
+    //ca_poly_vec_append(SRemS, P, ctx); ca_poly_vec is incomplete
+    ca_poly_set(SRemS[0], P, ctx);
+
+    if(Q_is_zero == T_TRUE)
+    {
+        // return index of last non zero polynomial of the sequence
+        return 0;
+    }
+
+    // Add the second polynomial of SRemS, which is Q
+    //ca_poly_vec_append(SRemS, Q, ctx); ca_poly_vec is incomplete
+    ca_poly_set(SRemS[1], Q, ctx);
+
+    // Recursively add non zero signed remainders to SRemS.
+    // Use a variable k to store the index of the last non zero polynomial in SRemS.
+    // It will be returned by this function if there is no error.
+    int k = 1;
+    while(1)
+    {
+        ca_poly_t remainder;
+        ca_poly_init(remainder, ctx);
+
+        int success = ca_poly_rem(remainder, SRemS[k-1], SRemS[k], ctx);
+        if(!success)
+        {
+            printf("Error in compute_signed_remainder_sequence: failed to compute remainder.");
+        }
+
+        truth_t zero_remainder = ca_poly_check_is_zero(remainder, ctx);
+        switch(zero_remainder)
+        {
+            case(T_UNKNOWN):
+                printf("Error in compute_signed_remainder_sequence: failed to check if remainder is zero.");
+                ca_poly_clear(remainder, ctx);
+                return -1;
+
+            case(T_FALSE):
+                //ca_poly_vec_append(SRemS, remainder, ctx); ca_poly_vec is incomplete
+                k++;
+                ca_poly_set(SRemS[k], remainder, ctx);
+                break;
+
+            case(T_TRUE):
+                // Clear the zero remainder, because it was not added to SRemS.
+                // SRemS will be responsible for clearing the polynomials it stores.
+                ca_poly_clear(remainder, ctx);
+                // Then return k, which is the index of the last non zero polynomial in SRemS.
+                return k;
+        }
+    }
+}
