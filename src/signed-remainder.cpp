@@ -9,13 +9,13 @@ int compute_signed_remainder_sequence(ca_poly_t * SRemS, ca_poly_t P, ca_poly_t 
 
     if(P_is_zero == T_UNKNOWN || Q_is_zero == T_UNKNOWN)
     {
-        printf("Error in compute_signed_remainder_sequence couldn't check if P or Q is 0.");
+        printf("Error in compute_signed_remainder_sequence couldn't check if P or Q is 0.");fflush(stdout);
         return -1;
     }
 
     if(P_is_zero == T_TRUE && Q_is_zero == T_TRUE)
     {
-        printf("Error in compute_signed_remainder_sequence: both P and Q are 0.");
+        printf("Error in compute_signed_remainder_sequence: both P and Q are 0.");fflush(stdout);
         return -1;
     }
 
@@ -50,14 +50,14 @@ int compute_signed_remainder_sequence(ca_poly_t * SRemS, ca_poly_t P, ca_poly_t 
         int success = ca_poly_rem(signed_remainder, SRemS[k-1], SRemS[k], ctx);
         if(!success)
         {
-            printf("Error in compute_signed_remainder_sequence: failed to compute remainder.");
+            printf("Error in compute_signed_remainder_sequence: failed to compute remainder.");fflush(stdout);
         }
 
         truth_t zero_remainder = ca_poly_check_is_zero(signed_remainder, ctx);
         switch(zero_remainder)
         {
             case(T_UNKNOWN):
-                printf("Error in compute_signed_remainder_sequence: failed to check if remainder is zero.");
+                printf("Error in compute_signed_remainder_sequence: failed to check if remainder is zero.");fflush(stdout);
                 ca_poly_clear(signed_remainder, ctx);
                 return -1;
 
