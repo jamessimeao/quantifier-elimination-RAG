@@ -42,15 +42,16 @@ int compute_signed_remainder_sequence(ca_poly_t * SRemS, ca_poly_t P, ca_poly_t 
     // Use a variable k to store the index of the last non zero polynomial in SRemS.
     // It will be returned by this function if there is no error.
     int k = 1;
+    ca_poly_t signed_remainder;
+    ca_poly_init(signed_remainder, ctx);
     while(1)
     {
-        ca_poly_t signed_remainder;
-        ca_poly_init(signed_remainder, ctx);
-
         int success = ca_poly_rem(signed_remainder, SRemS[k-1], SRemS[k], ctx);
         if(!success)
         {
             printf("Error in compute_signed_remainder_sequence: failed to compute remainder.");fflush(stdout);
+            k = -1;
+            goto end;
         }
 
         truth_t zero_remainder = ca_poly_check_is_zero(signed_remainder, ctx);
@@ -59,7 +60,8 @@ int compute_signed_remainder_sequence(ca_poly_t * SRemS, ca_poly_t P, ca_poly_t 
             case(T_UNKNOWN):
                 printf("Error in compute_signed_remainder_sequence: failed to check if remainder is zero.");fflush(stdout);
                 ca_poly_clear(signed_remainder, ctx);
-                return -1;
+                k = -1;
+                goto end;
 
             case(T_FALSE):
                 //ca_poly_vec_append(SRemS, remainder, ctx); ca_poly_vec is incomplete
@@ -71,11 +73,13 @@ int compute_signed_remainder_sequence(ca_poly_t * SRemS, ca_poly_t P, ca_poly_t 
                 break;
 
             case(T_TRUE):
-                // Clear the zero remainder, because it was not added to SRemS.
-                // SRemS will be responsible for clearing the polynomials it stores.
-                ca_poly_clear(signed_remainder, ctx);
-                // Then return k, which is the index of the last non zero polynomial in SRemS.
-                return k;
+                goto end;
         }
     }
+    end:
+    ca_poly_clear(signed_remainder, ctx);
+    // Return k.
+    // If there was no error, k is the index of the last non zero polynomial in SRemS.
+    // Otherwise, k = -1, which means there was an error.
+    return k;
 }
