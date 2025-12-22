@@ -20,6 +20,11 @@ PolyXX::~PolyXX()
     ca_poly_clear(poly, ctx());
 }
 
+ca_poly_t & PolyXX::unwrap()
+{
+    return poly;
+}
+
 void PolyXX::set_name(std::string_view new_name)
 {
     name = new_name;

@@ -16,6 +16,7 @@ public:
     PolyXX(CtxXX & ctxXX);
     PolyXX(PolyXX & P);
     ~PolyXX();
+    ca_poly_t & unwrap();
     void set_name(std::string_view new_name);
     void println();
     void set_coeff(slong n, CaXX& x);
