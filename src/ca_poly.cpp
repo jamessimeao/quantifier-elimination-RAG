@@ -62,6 +62,18 @@ bool CaPolyXX::set_to_rem(CaPolyXX & A, CaPolyXX & B)
     return success == 1;
 }
 
+bool CaPolyXX::rem(CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
+{
+    int success = ca_poly_rem(R.poly, A.poly, B.poly, ctxXX.unwrap());
+    return success == 1;
+}
+
+bool CaPolyXX::divrem(CaPolyXX & Q, CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
+{
+    int success = ca_poly_divrem(Q.poly , R.poly, A.poly, B.poly, ctxXX.unwrap());
+    return success == 1;
+}
+
 truth_t CaPolyXX::check_is_zero()
 {
     return ca_poly_check_is_zero(poly, ctx());

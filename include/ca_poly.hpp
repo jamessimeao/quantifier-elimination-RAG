@@ -22,5 +22,7 @@ public:
     void set_si(slong x);
     void set_to_neg();
     bool set_to_rem(CaPolyXX & A, CaPolyXX & B);
+    static bool rem(CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
+    static bool divrem(CaPolyXX & Q, CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
     truth_t check_is_zero();
 };
