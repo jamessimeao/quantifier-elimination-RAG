@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../include/signed-remainder.hpp"
+#include "../include/srems.hpp"
 
 void test_SRemS()
 {

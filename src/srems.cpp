@@ -1,4 +1,4 @@
-#include "../include/signed-remainder.hpp"
+#include "../include/srems.hpp"
 
 SRemS::SRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
 {
