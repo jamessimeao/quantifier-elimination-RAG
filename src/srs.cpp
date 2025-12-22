@@ -1,4 +1,4 @@
-#include "../include/srems.hpp"
+#include "../include/srs.hpp"
 
 SRemS::SRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
 {
