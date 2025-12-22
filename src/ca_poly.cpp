@@ -115,6 +115,12 @@ bool CaPolyXX::divrem(CaPolyXX & Q, CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, Ca
     return success == 1;
 }
 
+bool CaPolyXX::gcd(CaPolyXX & gcd, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
+{
+    int success = ca_poly_gcd(gcd.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap());
+    return success == 1;
+}
+
 truth_t CaPolyXX::check_is_zero()
 {
     return ca_poly_check_is_zero(poly, ctx());
