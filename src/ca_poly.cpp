@@ -10,7 +10,7 @@ CaPolyXX::CaPolyXX(CaCtxXX & ctxXX)
 CaPolyXX::CaPolyXX(CaPolyXX & P)
 {
     ctxXX_ptr = P.ctxXX_ptr;
-    ca_poly_set(poly, P.poly, ctx());
+    ca_poly_set(poly, P.unwrap(), ctx());
 }
     
 CaPolyXX::~CaPolyXX()
@@ -58,13 +58,13 @@ void CaPolyXX::set_to_neg()
 
 bool CaPolyXX::set_to_rem(CaPolyXX & A, CaPolyXX & B)
 {
-    int success = ca_poly_rem(poly, A.poly, B.poly, ctx());
+    int success = ca_poly_rem(poly, A.unwrap(), B.unwrap(), ctx());
     return success == 1;
 }
 
 bool CaPolyXX::rem(CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
 {
-    int success = ca_poly_rem(R.poly, A.poly, B.poly, ctxXX.unwrap());
+    int success = ca_poly_rem(R.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap());
     return success == 1;
 }
 
@@ -75,7 +75,7 @@ void CaPolyXX::neg(CaPolyXX MinusA, CaPolyXX A, CaCtxXX ctxXX)
 
 bool CaPolyXX::divrem(CaPolyXX & Q, CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
 {
-    int success = ca_poly_divrem(Q.poly , R.poly, A.poly, B.poly, ctxXX.unwrap());
+    int success = ca_poly_divrem(Q.unwrap() , R.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap());
     return success == 1;
 }
 
