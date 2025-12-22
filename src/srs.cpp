@@ -7,12 +7,12 @@ SRemS::SRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
 
     if(P_is_zero == T_UNKNOWN || Q_is_zero == T_UNKNOWN)
     {
-        throw std::runtime_error("Error in compute_signed_remainder_sequence: couldn't check if P or Q is 0.\n");
+        throw std::runtime_error("Error in SRemS constructor: couldn't check if P or Q is 0.\n");
     }
 
     if(P_is_zero == T_TRUE && Q_is_zero == T_TRUE)
     {
-        throw std::runtime_error("Error in compute_signed_remainder_sequence: both P and Q are 0.\n");
+        throw std::runtime_error("Error in SRemS constructor: both P and Q are 0.\n");
     }
 
     // Here we know if P and Q are 0 or not, and that not both are 0.
@@ -53,7 +53,7 @@ SRemS::SRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
         bool success = signed_remainder.set_to_rem(*sequence[i-1], *sequence[i]);
         if(!success)
         {
-            throw std::runtime_error("Error in compute_signed_remainder_sequence: failed to compute remainder.\n");
+            throw std::runtime_error("Error in SRemS constructor: failed to compute remainder.\n");
         }
 
         truth_t zero_remainder = signed_remainder.check_is_zero();
@@ -64,7 +64,7 @@ SRemS::SRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
         switch(zero_remainder)
         {
             case(T_UNKNOWN):
-                throw std::runtime_error("Error in compute_signed_remainder_sequence: failed to check if remainder is zero.\n");
+                throw std::runtime_error("Error in SRemS constructor: failed to check if remainder is zero.\n");
 
             case(T_FALSE):
                 i++;
