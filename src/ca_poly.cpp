@@ -68,22 +68,22 @@ bool CaPolyXX::rem(CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
     return success == 1;
 }
 
-void CaPolyXX::neg(CaPolyXX minusA, CaPolyXX A, CaCtxXX ctxXX)
+void CaPolyXX::neg(CaPolyXX & minusA, CaPolyXX & A, CaCtxXX & ctxXX)
 {
     ca_poly_neg(minusA.unwrap(), A.unwrap(), ctxXX.unwrap());
 }
 
-void CaPolyXX::add(CaPolyXX sum, CaPolyXX A, CaPolyXX B, CaCtxXX & ctxXX)
+void CaPolyXX::add(CaPolyXX & sum, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
 {
     ca_poly_add(sum.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap());
 }
 
-void CaPolyXX::sub(CaPolyXX difference, CaPolyXX A, CaPolyXX B, CaCtxXX & ctxXX)
+void CaPolyXX::sub(CaPolyXX & difference, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
 {
     ca_poly_sub(difference.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap());
 }
 
-void CaPolyXX::mul(CaPolyXX product, CaPolyXX A, CaPolyXX B, CaCtxXX & ctxXX)
+void CaPolyXX::mul(CaPolyXX & product, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
 {
     ca_poly_mul(product.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap());
 }
