@@ -68,9 +68,9 @@ bool CaPolyXX::rem(CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
     return success == 1;
 }
 
-void CaPolyXX::neg(CaPolyXX MinusA, CaPolyXX A, CaCtxXX ctxXX)
+void CaPolyXX::neg(CaPolyXX minusA, CaPolyXX A, CaCtxXX ctxXX)
 {
-    ca_poly_neg(MinusA.unwrap(), A.unwrap(), ctxXX.unwrap());
+    ca_poly_neg(minusA.unwrap(), A.unwrap(), ctxXX.unwrap());
 }
 
 bool CaPolyXX::divrem(CaPolyXX & Q, CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
