@@ -46,7 +46,7 @@ void CaPolyXX::set_coeff_ca(slong n, CaXX & x)
     ca_poly_set_coeff_ca(poly, n, x.unwrap(), ctx());
 }
 
-void CaPolyXX::set_si(slong n, slong x)
+void CaPolyXX::set_si(slong x)
 {
     ca_poly_set_si(poly, x, ctx());
 }
