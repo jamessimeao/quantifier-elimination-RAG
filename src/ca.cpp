@@ -2,14 +2,14 @@
 
 CaXX::CaXX(CtxXX & ctxXX)
 {
-    printf("Initilizing CaXX...\n");fflush(stdout);
+    std::cout << "Initilizing CaXX...\n";
     ca_init(x, *ctxXX._ctx_ptr());
     ctxXX_ptr = &ctxXX;
 }
 
 CaXX::~CaXX()
 {
-    printf("Destructing CaXX...\n");fflush(stdout);
+    std::cout << "Destructing CaXX...\n";
     ca_clear(x,*ctx_ptr());
 }
 
