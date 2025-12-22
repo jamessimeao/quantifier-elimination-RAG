@@ -36,6 +36,27 @@ void CaPolyXX::println()
     ca_poly_print(poly, ctx());
 }
 
+// returns true if successful
+bool CaPolyXX::compute_degree()
+{
+    bool is_proper = (ca_poly_is_proper(poly, ctx()) == 1);
+    if(is_proper)
+    {
+        degree = poly->length-1;
+    }
+    else
+    {
+        std::cout << "Failed to compute degree, because polynomial isn't proper.\n";
+    }
+    return is_proper;
+}
+
+// Should only be called after a call to compute_degree which returned true
+slong CaPolyXX::get_degree()
+{
+    return degree;
+}
+
 ca_ctx_t & CaPolyXX::ctx()
 {
     return ctxXX_ptr->unwrap();
