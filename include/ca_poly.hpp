@@ -15,8 +15,6 @@ private:
     std::string name;
 
     slong degree;
-    //bool degree_is_known;
-    //size_t degree_upper_bound;
 public:
     CaPolyXX(CaCtxXX & ctxXX);
     CaPolyXX(CaPolyXX & P);
