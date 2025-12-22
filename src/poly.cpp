@@ -38,7 +38,7 @@ ca_ctx_t * PolyXX::ctx_ptr()
 
 void PolyXX::set_coeff(slong n, CaXX & x)
 {
-    ca_poly_set_coeff_ca(poly,n,*x._ca_ptr(),*ctx_ptr());
+    ca_poly_set_coeff_ca(poly,n, x._unwrap(),*ctx_ptr());
 }
 
 void PolyXX::set_to_neg()

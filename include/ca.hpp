@@ -13,7 +13,7 @@ private:
 public:
     CaXX(CtxXX & ctxXX);
     ~CaXX();
-    ca_t * _ca_ptr();
+    ca_t & _unwrap();
     void set_si(slong v);
 
     void println();

@@ -24,9 +24,9 @@ ca_ctx_t * CaXX::ctx_ptr()
     return ctxXX_ptr->_ctx_ptr();
 }
 
-ca_t * CaXX::_ca_ptr()
+ca_t & CaXX::_unwrap()
 {
-    return &x;
+    return x;
 }
 
 void CaXX::set_si(slong v)
