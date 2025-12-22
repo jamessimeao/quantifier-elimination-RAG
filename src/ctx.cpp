@@ -2,13 +2,13 @@
 
 CtxXX::CtxXX()
 {
-    printf("Initilizing CtxXX...\n");fflush(stdout);
+    std::cout << "Initilizing CtxXX...\n";
     ca_ctx_init(ctx);
 }
 
 CtxXX::~CtxXX()
 {
-    printf("Destructing CtxXX...\n");fflush(stdout);
+    std::cout << "Destructing CtxXX...\n";
     ca_ctx_clear(ctx);
 }
 

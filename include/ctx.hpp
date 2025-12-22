@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include "flint/ca.h"
 
 // C++ wrapper for ca_ctx_t.
