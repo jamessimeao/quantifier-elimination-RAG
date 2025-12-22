@@ -29,7 +29,7 @@ SRemS::SRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
     if(Q_is_zero == T_TRUE)
     {
         // return index of last non zero polynomial of the sequence
-        last_index = 0;
+        gcd_index = 0;
         return;
     }
 
@@ -42,7 +42,7 @@ SRemS::SRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
     // Recursively add non zero signed remainders to SRemS.
     // Use a variable k to store the index of the last non zero polynomial in SRemS.
     // It will be returned by this function if there is no error.
-    last_index = 1;
+    size_t i = 1;
 
     CaPolyXX signed_remainder = CaPolyXX(ctxXX);
     signed_remainder.set_name("signed_remainder");
@@ -50,7 +50,7 @@ SRemS::SRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
     while(true)
     {
         std::cout << "Computing remainder" << std::endl;
-        bool success = signed_remainder.set_to_rem(*sequence[last_index-1], *sequence[last_index]);
+        bool success = signed_remainder.set_to_rem(*sequence[i-1], *sequence[i]);
         if(!success)
         {
             throw std::runtime_error("Error in compute_signed_remainder_sequence: failed to compute remainder.\n");
@@ -67,13 +67,15 @@ SRemS::SRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
                 throw std::runtime_error("Error in compute_signed_remainder_sequence: failed to check if remainder is zero.\n");
 
             case(T_FALSE):
-                last_index++;
+                i++;
                 // add the signed remainder to SRemS
-                signed_remainder_copy_ptr->set_name("SRemS_" + std::to_string(last_index));
+                signed_remainder_copy_ptr->set_name("SRemS_" + std::to_string(i));
                 sequence.push_back(signed_remainder_copy_ptr);
                 break;
 
             case(T_TRUE):
+                // Store the index of the GCD, which is the index of the last non zero remainder
+                gcd_index = i;
                 return;
         }
     }
@@ -89,12 +91,12 @@ SRemS::~SRemS()
     std::cout << "Finished destructing SRemS\n";
 }
 
-size_t SRemS::get_last_index()
+size_t SRemS::get_gcd_index()
 {
-    return last_index;
+    return gcd_index;
 }
 
 CaPolyXX & SRemS::gcd()
 {
-    return *sequence[last_index];
+    return *sequence[gcd_index];
 }

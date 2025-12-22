@@ -8,10 +8,10 @@ class SRemS
 {
 private:
     std::vector<CaPolyXX*> sequence;
-    size_t last_index;
+    size_t gcd_index;
 public:
     SRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX);
     ~SRemS();
-    size_t get_last_index();
+    size_t get_gcd_index();
     CaPolyXX & gcd();
 };
