@@ -21,13 +21,13 @@ void test_SRemS()
     Q.set_name("Q");
     
     // P = X^2 +2X +1
-    P.set_coeff(0, one);
-    P.set_coeff(1, two);
-    P.set_coeff(2, one);
+    P.set_coeff_ca(0, one);
+    P.set_coeff_ca(1, two);
+    P.set_coeff_ca(2, one);
 
     // Q = X^2 -1
-    Q.set_coeff(0, minus_one);
-    Q.set_coeff(2, one);
+    Q.set_coeff_ca(0, minus_one);
+    Q.set_coeff_ca(2, one);
 
     // print P and Q
     P.println();

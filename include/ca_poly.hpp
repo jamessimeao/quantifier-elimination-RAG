@@ -18,7 +18,8 @@ public:
     ca_poly_t & unwrap();
     void set_name(std::string_view new_name);
     void println();
-    void set_coeff(slong n, CaXX& x);
+    void set_coeff_ca(slong n, CaXX& x);
+    void set_si(slong n, slong x);
     void set_to_neg();
     bool set_to_rem(CaPolyXX & A, CaPolyXX & B);
     truth_t check_is_zero();
