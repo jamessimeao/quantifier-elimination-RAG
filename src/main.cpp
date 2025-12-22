@@ -89,8 +89,38 @@ void test_XSRemS()
     std::cout << "Finished." << std::endl;
 }
 
+void testDegree()
+{
+CaCtxXX ctxXX;
+
+    CaXX one = CaXX(ctxXX);
+    CaXX two = CaXX(ctxXX);
+    CaXX minus_one = CaXX(ctxXX);
+
+    one.set_si(1);
+    two.set_si(2);
+    minus_one.set_si(-1);
+    
+    CaPolyXX P = CaPolyXX(ctxXX);
+    P.set_name("P");
+    
+    // P = X^2 +2X +1
+    P.set_coeff_ca(0, one);
+    P.set_coeff_ca(1, two);
+    P.set_coeff_ca(2, one);
+    CaXX zero = CaXX(ctxXX);
+    zero.set_si(0);
+    P.set_coeff_ca(5, zero);
+
+    bool result = P.compute_degree();
+    if(result)
+    {
+        std::cout << "degree = " << P.get_degree() << std::endl;
+    }
+
+}
+
 int main()
 {
-    test_XSRemS();
     return 0;
 }
