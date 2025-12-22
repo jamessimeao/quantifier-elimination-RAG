@@ -10,7 +10,7 @@ class PolyXX
 private:
     ca_poly_t poly;
     CtxXX * ctxXX_ptr;
-    ca_ctx_t * ctx_ptr();
+    ca_ctx_t & ctx();
     std::string name;
 public:
     PolyXX(CtxXX & ctxXX);

@@ -11,5 +11,5 @@ private:
 public:
     CtxXX();
     ~CtxXX();
-    ca_ctx_t * _ctx_ptr();
+    ca_ctx_t & unwrap();
 };

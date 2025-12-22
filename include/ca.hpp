@@ -9,7 +9,7 @@ class CaXX
 private:
     ca_t x;
     CtxXX * ctxXX_ptr;
-    ca_ctx_t * ctx_ptr();
+    ca_ctx_t & ctx();
 public:
     CaXX(CtxXX & ctxXX);
     ~CaXX();

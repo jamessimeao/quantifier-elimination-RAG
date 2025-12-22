@@ -3,25 +3,25 @@
 CaXX::CaXX(CtxXX & ctxXX)
 {
     std::cout << "Initilizing CaXX...\n";
-    ca_init(x, *ctxXX._ctx_ptr());
+    ca_init(x, ctxXX.unwrap());
     ctxXX_ptr = &ctxXX;
 }
 
 CaXX::~CaXX()
 {
     std::cout << "Destructing CaXX...\n";
-    ca_clear(x,*ctx_ptr());
+    ca_clear(x, ctx());
 }
 
 void CaXX::println()
 {
-    ca_print(x, *ctx_ptr());
+    ca_print(x, ctx());
     std::cout << "\n";
 }
 
-ca_ctx_t * CaXX::ctx_ptr()
+ca_ctx_t & CaXX::ctx()
 {
-    return ctxXX_ptr->_ctx_ptr();
+    return ctxXX_ptr->unwrap();
 }
 
 ca_t & CaXX::unwrap()
@@ -31,5 +31,5 @@ ca_t & CaXX::unwrap()
 
 void CaXX::set_si(slong v)
 {
-    ca_set_si(x, v, *ctxXX_ptr->_ctx_ptr());
+    ca_set_si(x, v, ctxXX_ptr->unwrap());
 }

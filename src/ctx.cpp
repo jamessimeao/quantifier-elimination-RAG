@@ -12,7 +12,7 @@ CtxXX::~CtxXX()
     ca_ctx_clear(ctx);
 }
 
-ca_ctx_t * CtxXX::_ctx_ptr()
+ca_ctx_t & CtxXX::unwrap()
 {
-    return &ctx;
+    return ctx;
 }
