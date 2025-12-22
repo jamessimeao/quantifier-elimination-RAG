@@ -1,63 +1,63 @@
-#include "../include/poly.hpp"
+#include "../include/ca_poly.hpp"
 
-PolyXX::PolyXX(CtxXX & ctxXX)
+CaPolyXX::CaPolyXX(CaCtxXX & ctxXX)
 {
-    std::cout << "Initializing PolyXX...\n";
+    std::cout << "Initializing CaPolyXX...\n";
     ca_poly_init(poly, ctxXX.unwrap());
     ctxXX_ptr = &ctxXX;
 }
 
-PolyXX::PolyXX(PolyXX & P)
+CaPolyXX::CaPolyXX(CaPolyXX & P)
 {
     ctxXX_ptr = P.ctxXX_ptr;
     ca_poly_set(poly, P.poly, ctx());
 }
     
-PolyXX::~PolyXX()
+CaPolyXX::~CaPolyXX()
 {
-    std::cout << "Destructing PolyXX "<< name <<"...\n";
+    std::cout << "Destructing CaPolyXX...\n";
     println();
     ca_poly_clear(poly, ctx());
 }
 
-ca_poly_t & PolyXX::unwrap()
+ca_poly_t & CaPolyXX::unwrap()
 {
     return poly;
 }
 
-void PolyXX::set_name(std::string_view new_name)
+void CaPolyXX::set_name(std::string_view new_name)
 {
     name = new_name;
 }
 
-void PolyXX::println()
+void CaPolyXX::println()
 {
     std::cout << name << ":\n";
     ca_poly_print(poly, ctx());
 }
 
-ca_ctx_t & PolyXX::ctx()
+ca_ctx_t & CaPolyXX::ctx()
 {
     return ctxXX_ptr->unwrap();
 }
 
-void PolyXX::set_coeff(slong n, CaXX & x)
+void CaPolyXX::set_coeff(slong n, CaXX & x)
 {
     ca_poly_set_coeff_ca(poly,n, x.unwrap(), ctx());
 }
 
-void PolyXX::set_to_neg()
+void CaPolyXX::set_to_neg()
 {
     ca_poly_neg(poly,poly, ctx());
 }
 
-bool PolyXX::set_to_rem(PolyXX & A, PolyXX & B)
+bool CaPolyXX::set_to_rem(CaPolyXX & A, CaPolyXX & B)
 {
     int success = ca_poly_rem(poly, A.poly, B.poly, ctx());
     return success == 1;
 }
 
-truth_t PolyXX::check_is_zero()
+truth_t CaPolyXX::check_is_zero()
 {
     return ca_poly_check_is_zero(poly, ctx());
 }

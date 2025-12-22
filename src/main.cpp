@@ -5,7 +5,7 @@
 
 void test_SRemS()
 {
-    CtxXX ctxXX;
+    CaCtxXX ctxXX;
 
     CaXX one = CaXX(ctxXX);
     CaXX two = CaXX(ctxXX);
@@ -15,8 +15,8 @@ void test_SRemS()
     two.set_si(2);
     minus_one.set_si(-1);
     
-    PolyXX P = PolyXX(ctxXX);
-    PolyXX Q = PolyXX(ctxXX);
+    CaPolyXX P = CaPolyXX(ctxXX);
+    CaPolyXX Q = CaPolyXX(ctxXX);
     P.set_name("P");
     Q.set_name("Q");
     
@@ -39,7 +39,7 @@ void test_SRemS()
 
     std::cout << "Print the gcd" << std::endl;
 
-    PolyXX & gcd = srs.gcd();
+    CaPolyXX & gcd = srs.gcd();
     gcd.println();
 
     std::cout << "Finished." << std::endl;

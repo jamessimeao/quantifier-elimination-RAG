@@ -1,17 +1,17 @@
 #pragma once
 
 #include <iostream>
-#include "ctx.hpp"
+#include "ca_ctx.hpp"
 
 // C++ wrapper for ca_t
 class CaXX
 {
 private:
     ca_t x;
-    CtxXX * ctxXX_ptr;
+    CaCtxXX * ctxXX_ptr;
     ca_ctx_t & ctx();
 public:
-    CaXX(CtxXX & ctxXX);
+    CaXX(CaCtxXX & ctxXX);
     ~CaXX();
     ca_t & unwrap();
     void set_si(slong v);

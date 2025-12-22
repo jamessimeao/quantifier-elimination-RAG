@@ -1,6 +1,6 @@
 #include "../include/ca.hpp"
 
-CaXX::CaXX(CtxXX & ctxXX)
+CaXX::CaXX(CaCtxXX & ctxXX)
 {
     std::cout << "Initilizing CaXX...\n";
     ca_init(x, ctxXX.unwrap());

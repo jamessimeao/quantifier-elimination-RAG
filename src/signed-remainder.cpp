@@ -1,6 +1,6 @@
 #include "../include/signed-remainder.hpp"
 
-SRemS::SRemS(PolyXX & P, PolyXX & Q, CtxXX & ctxXX)
+SRemS::SRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
 {
     truth_t P_is_zero = P.check_is_zero();
     truth_t Q_is_zero = Q.check_is_zero();
@@ -22,7 +22,7 @@ SRemS::SRemS(PolyXX & P, PolyXX & Q, CtxXX & ctxXX)
 
     // Add the first polynomial of SRemS, which is P
     std::cout << "push_back" << std::endl;
-    PolyXX * P_copy_ptr = new PolyXX(P);
+    CaPolyXX * P_copy_ptr = new CaPolyXX(P);
     P_copy_ptr->set_name("SRemS_" + std::to_string(0));
     sequence.push_back(P_copy_ptr);
 
@@ -35,7 +35,7 @@ SRemS::SRemS(PolyXX & P, PolyXX & Q, CtxXX & ctxXX)
 
     // Add the second polynomial of SRemS, which is Q
     std::cout << "push_back" << std::endl;
-    PolyXX * Q_copy_ptr = new PolyXX(Q);
+    CaPolyXX * Q_copy_ptr = new CaPolyXX(Q);
     Q_copy_ptr->set_name("SRemS_" + std::to_string(1));
     sequence.push_back(Q_copy_ptr);
 
@@ -44,7 +44,7 @@ SRemS::SRemS(PolyXX & P, PolyXX & Q, CtxXX & ctxXX)
     // It will be returned by this function if there is no error.
     last_index = 1;
 
-    PolyXX signed_remainder = PolyXX(ctxXX);
+    CaPolyXX signed_remainder = CaPolyXX(ctxXX);
     signed_remainder.set_name("signed_remainder");
     std::cout << "Entering while loop" << std::endl;
     while(true)
@@ -60,7 +60,7 @@ SRemS::SRemS(PolyXX & P, PolyXX & Q, CtxXX & ctxXX)
         std::cout << "Switch case" << std::endl;
         // multiply the remainder by -1
         signed_remainder.set_to_neg();
-        PolyXX * signed_remainder_copy_ptr = new PolyXX(signed_remainder);
+        CaPolyXX * signed_remainder_copy_ptr = new CaPolyXX(signed_remainder);
         switch(zero_remainder)
         {
             case(T_UNKNOWN):
@@ -82,9 +82,9 @@ SRemS::SRemS(PolyXX & P, PolyXX & Q, CtxXX & ctxXX)
 SRemS::~SRemS()
 {
     std::cout << "Destructing SRemS...\n";
-    for(PolyXX * poly_ptr : sequence)
+    for(CaPolyXX * poly_ptr : sequence)
     {
-        poly_ptr->~PolyXX();
+        poly_ptr->~CaPolyXX();
     }
     std::cout << "Finished destructing SRemS\n";
 }
@@ -94,7 +94,7 @@ size_t SRemS::get_last_index()
     return last_index;
 }
 
-PolyXX & SRemS::gcd()
+CaPolyXX & SRemS::gcd()
 {
     return *sequence[last_index];
 }

@@ -4,12 +4,12 @@
 #include "flint/ca.h"
 
 // C++ wrapper for ca_ctx_t.
-class CtxXX
+class CaCtxXX
 {
 private:
     ca_ctx_t ctx;
 public:
-    CtxXX();
-    ~CtxXX();
+    CaCtxXX();
+    ~CaCtxXX();
     ca_ctx_t & unwrap();
 };
