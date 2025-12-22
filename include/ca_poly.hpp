@@ -23,6 +23,9 @@ public:
     void set_to_neg();
     bool set_to_rem(CaPolyXX & A, CaPolyXX & B);
     static void neg(CaPolyXX minusA, CaPolyXX A, CaCtxXX ctxXX);
+    static void add(CaPolyXX sum, CaPolyXX A, CaPolyXX B, CaCtxXX & ctxXX);
+    static void sub(CaPolyXX difference, CaPolyXX A, CaPolyXX B, CaCtxXX & ctxXX);
+    static void mul(CaPolyXX product, CaPolyXX A, CaPolyXX B, CaCtxXX & ctxXX);
     static bool rem(CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
     static bool divrem(CaPolyXX & Q, CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
     truth_t check_is_zero();
