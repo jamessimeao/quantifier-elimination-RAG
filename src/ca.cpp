@@ -24,7 +24,7 @@ ca_ctx_t * CaXX::ctx_ptr()
     return ctxXX_ptr->_ctx_ptr();
 }
 
-ca_t & CaXX::_unwrap()
+ca_t & CaXX::unwrap()
 {
     return x;
 }
