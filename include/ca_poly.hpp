@@ -39,9 +39,11 @@ public:
     static void add(CaPolyXX & sum, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
     static void sub(CaPolyXX & difference, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
     static void mul(CaPolyXX & product, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
+    static void pow(CaPolyXX & result, CaPolyXX & A, size_t n, CaCtxXX & ctxXX);
     static bool rem(CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
     static bool divrem(CaPolyXX & Q, CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
     static bool gcd(CaPolyXX & gcd, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
 
-    static bool compute_gcd_of_polys(CaPolyXX & gcd, std::list<CaPolyXX *> polys, CaCtxXX & ctxXX);
+    static void mul_polys(CaPolyXX & product, std::list<CaPolyXX *> & polys, CaCtxXX & ctxXX);
+    static bool compute_gcd_of_polys(CaPolyXX & gcd, std::list<CaPolyXX *> & polys, CaCtxXX & ctxXX);
 };

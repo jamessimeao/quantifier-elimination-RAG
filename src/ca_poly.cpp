@@ -114,6 +114,15 @@ void CaPolyXX::mul(CaPolyXX & product, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctx
     ca_poly_mul(product.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap());
 }
 
+void CaPolyXX::pow(CaPolyXX & result, CaPolyXX & A, size_t n, CaCtxXX & ctxXX)
+{
+    result.set_si(1);
+    for(size_t i {0}; i < n; i++)
+    {
+        CaPolyXX::mul(result, result, A, ctxXX);
+    }
+}
+
 bool CaPolyXX::divrem(CaPolyXX & Q, CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
 {
     int success {ca_poly_divrem(Q.unwrap() , R.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap())};
@@ -126,8 +135,17 @@ bool CaPolyXX::gcd(CaPolyXX & gcd, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
     return success == 1;
 }
 
+void CaPolyXX::mul_polys(CaPolyXX & product, std::list<CaPolyXX *> & polys, CaCtxXX & ctxXX)
+{
+    product.set_si(1);
+    for(CaPolyXX * poly_ptr : polys)
+    {
+        CaPolyXX::mul(product, product, *poly_ptr, ctxXX);
+    }
+}
+
 // Tries to compute the gcd of polys. Returns true if successful.
-bool CaPolyXX::compute_gcd_of_polys(CaPolyXX & gcd, std::list<CaPolyXX *> polys, CaCtxXX & ctxXX)
+bool CaPolyXX::compute_gcd_of_polys(CaPolyXX & gcd, std::list<CaPolyXX *> & polys, CaCtxXX & ctxXX)
 {
     gcd.set_si(0);
     bool successful;
