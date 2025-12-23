@@ -1,11 +1,11 @@
 #include "../include/basic_constructible.hpp"
 
-BasicConstructible::BasicConstructible(CaCtxXX & ctxXX)
+BasicConstructible1D::BasicConstructible1D(CaCtxXX & ctxXX)
 {
     ctxXX_ptr = &ctxXX;
 }
 
-void BasicConstructible::print_polys()
+void BasicConstructible1D::print_polys()
 {
     std::cout << "Polynomials to annihilate:\n";
     for(CaPolyXX * poly_ptr : polys_to_annihilate)
@@ -20,17 +20,17 @@ void BasicConstructible::print_polys()
     }
 }
 
-void BasicConstructible::add_poly_to_annihilate(CaPolyXX & P)
+void BasicConstructible1D::add_poly_to_annihilate(CaPolyXX & P)
 {
     polys_to_annihilate.push_back(&P);
 }
 
-void BasicConstructible::add_poly_not_to_annihilate(CaPolyXX & Q)
+void BasicConstructible1D::add_poly_not_to_annihilate(CaPolyXX & Q)
 {
     polys_to_annihilate.push_back(&Q);
 }
 
-void BasicConstructible::compute_power_of_product_of_polys_not_to_annihilate(CaPolyXX & product, slong power)
+void BasicConstructible1D::compute_power_of_product_of_polys_not_to_annihilate(CaPolyXX & product, slong power)
 {
     // First take the product of all polynomials in polys_not_to_annihilate
     CaPolyXX::mul_polys(product, polys_not_to_annihilate, *ctxXX_ptr);
@@ -38,7 +38,7 @@ void BasicConstructible::compute_power_of_product_of_polys_not_to_annihilate(CaP
     CaPolyXX::pow(product, product, power, *ctxXX_ptr);
 }
 
-bool BasicConstructible::is_empty()
+bool BasicConstructible1D::is_empty()
 {
     CaPolyXX gcd_bigger_degree {*ctxXX_ptr};
     bool successful {CaPolyXX::compute_gcd_of_polys(gcd_bigger_degree, polys_to_annihilate, *ctxXX_ptr)};

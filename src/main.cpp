@@ -3,7 +3,7 @@
 
 #include "../include/srs.hpp"
 #include "../include/xsrs.hpp"
-#include "../include/basic_constructible.hpp"
+#include "../include/basic_constructible_1d.hpp"
 
 void test_SRemS()
 {
@@ -121,7 +121,7 @@ CaCtxXX ctxXX;
 
 }
 
-void testBasicConstructible()
+void testBasicConstructible1D()
 {
     CaCtxXX ctxXX;
 
@@ -147,7 +147,7 @@ void testBasicConstructible()
     Q.set_coeff_ca(0, minus_one);
     Q.set_coeff_ca(2, one);
 
-    BasicConstructible bc {ctxXX};
+    BasicConstructible1D bc {ctxXX};
     bc.add_poly_to_annihilate(P);
     bc.add_poly_not_to_annihilate(Q);
 
@@ -158,6 +158,6 @@ void testBasicConstructible()
 
 int main()
 {
-    testBasicConstructible();
+    testBasicConstructible1D();
     return 0;
 }

@@ -3,7 +3,7 @@
 #include "ca_poly.hpp"
 #include <list>
 
-class BasicConstructible
+class BasicConstructible1D
 {
 private:
     std::list<CaPolyXX *> polys_to_annihilate;
@@ -13,7 +13,7 @@ private:
     void compute_power_of_product_of_polys_not_to_annihilate(CaPolyXX & product, slong power);
 
 public:
-    BasicConstructible(CaCtxXX & ctxXX);
+    BasicConstructible1D(CaCtxXX & ctxXX);
     void print_polys();
     void add_poly_to_annihilate(CaPolyXX & P);
     void add_poly_not_to_annihilate(CaPolyXX & Q);
