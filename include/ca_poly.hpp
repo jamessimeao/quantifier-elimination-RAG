@@ -2,6 +2,7 @@
 
 #include "flint/ca_poly.h"
 #include "../include/ca.hpp"
+#include <list>
 
 // C++ wrapper for ca_poly_t
 class CaPolyXX
@@ -20,7 +21,7 @@ public:
     CaPolyXX(CaPolyXX & P);
     ~CaPolyXX();
     ca_poly_t & unwrap();
-    
+
     void set_name(std::string_view new_name);
     void println();
 
@@ -41,4 +42,6 @@ public:
     static bool rem(CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
     static bool divrem(CaPolyXX & Q, CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
     static bool gcd(CaPolyXX & gcd, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
+
+    static bool compute_gcd_of_polys(CaPolyXX & gcd, std::list<CaPolyXX *> polys, CaCtxXX & ctxXX);
 };

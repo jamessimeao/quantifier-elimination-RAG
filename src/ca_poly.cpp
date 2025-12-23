@@ -125,3 +125,19 @@ bool CaPolyXX::gcd(CaPolyXX & gcd, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
     int success = ca_poly_gcd(gcd.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap());
     return success == 1;
 }
+
+// Tries to compute the gcd of polys. Returns true if successful.
+bool CaPolyXX::compute_gcd_of_polys(CaPolyXX & gcd, std::list<CaPolyXX *> polys, CaCtxXX & ctxXX)
+{
+    gcd.set_si(0);
+    bool successful;
+    for(CaPolyXX * poly_ptr : polys)
+    {
+        successful = CaPolyXX::gcd(gcd, gcd, *poly_ptr, ctxXX);
+        if(!successful)
+        {
+            return false;
+        }
+    }
+    return true;
+}
