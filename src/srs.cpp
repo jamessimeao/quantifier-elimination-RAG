@@ -2,8 +2,8 @@
 
 SRemS::SRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
 {
-    truth_t P_is_zero = P.check_is_zero();
-    truth_t Q_is_zero = Q.check_is_zero();
+    truth_t P_is_zero {P.check_is_zero()};
+    truth_t Q_is_zero {Q.check_is_zero()};
 
     if(P_is_zero == T_UNKNOWN || Q_is_zero == T_UNKNOWN)
     {
@@ -22,7 +22,7 @@ SRemS::SRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
 
     // Add the first polynomial of SRemS, which is P
     std::cout << "push_back" << std::endl;
-    CaPolyXX * P_copy_ptr = new CaPolyXX(P);
+    CaPolyXX * P_copy_ptr {new CaPolyXX(P)};
     P_copy_ptr->set_name("SRemS_" + std::to_string(0));
     sequence.push_back(P_copy_ptr);
 
@@ -35,32 +35,34 @@ SRemS::SRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
 
     // Add the second polynomial of SRemS, which is Q
     std::cout << "push_back" << std::endl;
-    CaPolyXX * Q_copy_ptr = new CaPolyXX(Q);
+    CaPolyXX * Q_copy_ptr {new CaPolyXX(Q)};
     Q_copy_ptr->set_name("SRemS_" + std::to_string(1));
     sequence.push_back(Q_copy_ptr);
 
     // Recursively add non zero signed remainders to SRemS.
     // Use a variable k to store the index of the last non zero polynomial in SRemS.
     // It will be returned by this function if there is no error.
-    size_t i = 1;
+    size_t i {1};
 
-    CaPolyXX signed_remainder = CaPolyXX(ctxXX);
+    CaPolyXX signed_remainder {ctxXX};
     signed_remainder.set_name("signed_remainder");
     std::cout << "Entering while loop" << std::endl;
+    bool success;
+    truth_t zero_remainder;
     while(true)
     {
         std::cout << "Computing remainder" << std::endl;
-        bool success = signed_remainder.set_to_rem(*sequence[i-1], *sequence[i]);
+        success = signed_remainder.set_to_rem(*sequence[i-1], *sequence[i]);
         if(!success)
         {
             throw std::runtime_error("Error in SRemS constructor: failed to compute remainder.\n");
         }
 
-        truth_t zero_remainder = signed_remainder.check_is_zero();
+        zero_remainder = signed_remainder.check_is_zero();
         std::cout << "Switch case" << std::endl;
         // multiply the remainder by -1
         signed_remainder.set_to_neg();
-        CaPolyXX * signed_remainder_copy_ptr = new CaPolyXX(signed_remainder);
+        CaPolyXX * signed_remainder_copy_ptr {new CaPolyXX(signed_remainder)};
         switch(zero_remainder)
         {
             case(T_UNKNOWN):
