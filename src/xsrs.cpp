@@ -127,7 +127,7 @@ XSRemS::~XSRemS()
     std::cout << "Destructing XSRemS...\n";
     for(std::tuple<CaPolyXX *, CaPolyXX *, CaPolyXX *> & tuple : sequence)
     {
-        // why for loop not working?
+        // Can't just use a for loop here, without some workaround
         std::get<0>(tuple)->~CaPolyXX();
         std::get<1>(tuple)->~CaPolyXX();
         std::get<2>(tuple)->~CaPolyXX();
