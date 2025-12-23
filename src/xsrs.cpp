@@ -2,8 +2,8 @@
 
 XSRemS::XSRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
 {
-    truth_t P_is_zero = P.check_is_zero();
-    truth_t Q_is_zero = Q.check_is_zero();
+    truth_t P_is_zero {P.check_is_zero()};
+    truth_t Q_is_zero {Q.check_is_zero()};
 
     if(P_is_zero == T_UNKNOWN || Q_is_zero == T_UNKNOWN)
     {
@@ -22,11 +22,11 @@ XSRemS::XSRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
 
     // Add the first polynomial of SRemS, which is P
     std::cout << "push_back" << std::endl;
-    CaPolyXX * P_copy_ptr = new CaPolyXX(P);
+    CaPolyXX * P_copy_ptr {new CaPolyXX(P)};
     P_copy_ptr->set_name("SRemS_" + std::to_string(0));
-    CaPolyXX * U0_ptr = new CaPolyXX(ctxXX);
+    CaPolyXX * U0_ptr {new CaPolyXX(ctxXX)};
     U0_ptr->set_si(1);
-    CaPolyXX * V0_ptr = new CaPolyXX(ctxXX);
+    CaPolyXX * V0_ptr {new CaPolyXX(ctxXX)};
     V0_ptr->set_si(0);
     sequence.push_back(std::make_tuple(P_copy_ptr,U0_ptr,V0_ptr));
 
@@ -39,23 +39,25 @@ XSRemS::XSRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
 
     // Add the second polynomial of SRemS, which is Q
     std::cout << "push_back" << std::endl;
-    CaPolyXX * Q_copy_ptr = new CaPolyXX(Q);
+    CaPolyXX * Q_copy_ptr {new CaPolyXX(Q)};
     Q_copy_ptr->set_name("SRemS_" + std::to_string(1));
-    CaPolyXX * U1_ptr = new CaPolyXX(ctxXX);
+    CaPolyXX * U1_ptr {new CaPolyXX(ctxXX)};
     U1_ptr->set_si(0);
-    CaPolyXX * V1_ptr = new CaPolyXX(ctxXX);
+    CaPolyXX * V1_ptr {new CaPolyXX(ctxXX)};
     V1_ptr->set_si(1);
     sequence.push_back(std::make_tuple(Q_copy_ptr,U1_ptr,V1_ptr));
 
     // Recursively add non zero signed remainders to SRemS.
     // Use a variable k to store the index of the last non zero polynomial in SRemS.
     // It will be returned by this function if there is no error.
-    size_t i = 1;
+    size_t i {1};
 
-    CaPolyXX quotient = CaPolyXX(ctxXX);
+    CaPolyXX quotient {ctxXX};
     quotient.set_name("quotient");
-    CaPolyXX signed_remainder = CaPolyXX(ctxXX);
+    CaPolyXX signed_remainder {ctxXX};
     signed_remainder.set_name("signed_remainder");
+    truth_t zero_remainder;
+    std::tuple<CaPolyXX *, CaPolyXX *, CaPolyXX *> tuple;
     std::cout << "Entering while loop" << std::endl;
     while(true)
     {
@@ -73,14 +75,14 @@ XSRemS::XSRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
         CaPolyXX * V_i_minus_1_ptr = std::get<2>(sequence[i-1]);
         CaPolyXX * V_i_ptr = std::get<2>(sequence[i]);
 
-        truth_t zero_remainder = signed_remainder.check_is_zero();
+        zero_remainder = signed_remainder.check_is_zero();
         // multiply the remainder by -1
         signed_remainder.set_to_neg();
         CaPolyXX * signed_remainder_copy_ptr = new CaPolyXX(signed_remainder);
 
         std::cout << "Computing U..." << std::endl;
         // U[i+1] = quotient*U[i] -U[i-1]
-        CaPolyXX * U_ptr = new CaPolyXX(ctxXX);
+        CaPolyXX * U_ptr {new CaPolyXX(ctxXX)};
         std::cout << "Multiplying polynomials" << std::endl; 
         CaPolyXX::mul(*U_ptr, quotient, *U_i_ptr, ctxXX);
         std::cout << "Subtracting polynomials" << std::endl;
@@ -88,12 +90,12 @@ XSRemS::XSRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
 
         std::cout << "Computing V..." << std::endl;
         // V[i+1] = quotient*V[i] -V[i-1]
-        CaPolyXX * V_ptr = new CaPolyXX(ctxXX);
+        CaPolyXX * V_ptr {new CaPolyXX(ctxXX)};
         CaPolyXX::mul(*V_ptr, quotient, *V_i_ptr, ctxXX);
         CaPolyXX::sub(*V_ptr, *V_ptr, *V_i_minus_1_ptr, ctxXX);
 
         // Make the tuple that will be stored in the extended signed remainder sequence
-        std::tuple<CaPolyXX *, CaPolyXX *, CaPolyXX *> tuple = std::make_tuple(signed_remainder_copy_ptr, U_ptr, V_ptr);
+        tuple = std::make_tuple(signed_remainder_copy_ptr, U_ptr, V_ptr);
 
         std::cout << "Switch case" << std::endl;
         switch(zero_remainder)
@@ -140,6 +142,6 @@ size_t XSRemS::get_gcd_index()
 
 CaPolyXX & XSRemS::gcd()
 {
-    CaPolyXX * gcd_ptr = std::get<0>(sequence[gcd_index]);
+    CaPolyXX * gcd_ptr {std::get<0>(sequence[gcd_index])};
     return *gcd_ptr;
 }
