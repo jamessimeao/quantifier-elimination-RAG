@@ -8,16 +8,16 @@ void test_SRemS()
 {
     CaCtxXX ctxXX;
 
-    CaXX one = CaXX(ctxXX);
-    CaXX two = CaXX(ctxXX);
-    CaXX minus_one = CaXX(ctxXX);
+    CaXX one {ctxXX};
+    CaXX two {ctxXX};
+    CaXX minus_one {ctxXX};
 
     one.set_si(1);
     two.set_si(2);
     minus_one.set_si(-1);
     
-    CaPolyXX P = CaPolyXX(ctxXX);
-    CaPolyXX Q = CaPolyXX(ctxXX);
+    CaPolyXX P {ctxXX};
+    CaPolyXX Q {ctxXX};
     P.set_name("P");
     Q.set_name("Q");
     
@@ -36,11 +36,11 @@ void test_SRemS()
 
     std::cout << "Computing SRemS" << std::endl;
 
-    SRemS srs = SRemS(P, Q, ctxXX);
+    SRemS srs {P, Q, ctxXX};
 
     std::cout << "Print the gcd" << std::endl;
 
-    CaPolyXX & gcd = srs.gcd();
+    CaPolyXX & gcd {srs.gcd()};
     gcd.println();
 
     std::cout << "Finished." << std::endl;
@@ -50,16 +50,16 @@ void test_XSRemS()
 {
     CaCtxXX ctxXX;
 
-    CaXX one = CaXX(ctxXX);
-    CaXX two = CaXX(ctxXX);
-    CaXX minus_one = CaXX(ctxXX);
+    CaXX one {ctxXX};
+    CaXX two {ctxXX};
+    CaXX minus_one {ctxXX};
 
     one.set_si(1);
     two.set_si(2);
     minus_one.set_si(-1);
     
-    CaPolyXX P = CaPolyXX(ctxXX);
-    CaPolyXX Q = CaPolyXX(ctxXX);
+    CaPolyXX P {ctxXX};
+    CaPolyXX Q {ctxXX};
     P.set_name("P");
     Q.set_name("Q");
     
@@ -79,11 +79,11 @@ void test_XSRemS()
     std::cout << "Computing SRemS" << std::endl;
 
     // Extended signed remainder sequence
-    XSRemS srs = XSRemS(P, Q, ctxXX);
+    XSRemS srs {P, Q, ctxXX};
 
     std::cout << "Print the gcd" << std::endl;
 
-    CaPolyXX & gcd = srs.gcd();
+    CaPolyXX & gcd {srs.gcd()};
     gcd.println();
 
     std::cout << "Finished." << std::endl;
@@ -93,26 +93,26 @@ void testDegree()
 {
 CaCtxXX ctxXX;
 
-    CaXX one = CaXX(ctxXX);
-    CaXX two = CaXX(ctxXX);
-    CaXX minus_one = CaXX(ctxXX);
+    CaXX one {ctxXX};
+    CaXX two {ctxXX};
+    CaXX minus_one {ctxXX};
 
     one.set_si(1);
     two.set_si(2);
     minus_one.set_si(-1);
     
-    CaPolyXX P = CaPolyXX(ctxXX);
+    CaPolyXX P {ctxXX};
     P.set_name("P");
     
     // P = X^2 +2X +1
     P.set_coeff_ca(0, one);
     P.set_coeff_ca(1, two);
     P.set_coeff_ca(2, one);
-    CaXX zero = CaXX(ctxXX);
+    CaXX zero {CaXX(ctxXX)};
     zero.set_si(0);
     P.set_coeff_ca(5, zero);
 
-    bool result = P.compute_degree();
+    bool result {P.compute_degree()};
     if(result)
     {
         std::cout << "degree = " << P.get_degree() << std::endl;
@@ -122,5 +122,6 @@ CaCtxXX ctxXX;
 
 int main()
 {
+    testDegree();
     return 0;
 }
