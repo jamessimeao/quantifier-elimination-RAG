@@ -145,6 +145,8 @@ void CaPolyXX::mul_polys(CaPolyXX & product, std::list<CaPolyXX *> & polys, CaCt
 }
 
 // Tries to compute the gcd of polys. Returns true if successful.
+// It doesn't check if a polynomial is zero before computing the gcd.
+// It may be necessary to first discard the zero polynomials before calling this function.
 bool CaPolyXX::compute_gcd_of_polys(CaPolyXX & gcd, std::list<CaPolyXX *> & polys, CaCtxXX & ctxXX)
 {
     gcd.set_si(0);
