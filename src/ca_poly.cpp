@@ -44,7 +44,7 @@ truth_t CaPolyXX::check_is_zero()
 // returns true if successful
 bool CaPolyXX::compute_degree()
 {
-    bool is_proper = (ca_poly_is_proper(poly, ctx()) == 1);
+    bool is_proper {ca_poly_is_proper(poly, ctx()) == 1};
     if(is_proper)
     {
         degree = poly->length-1;
@@ -84,13 +84,13 @@ void CaPolyXX::set_to_neg()
 
 bool CaPolyXX::set_to_rem(CaPolyXX & A, CaPolyXX & B)
 {
-    int success = ca_poly_rem(poly, A.unwrap(), B.unwrap(), ctx());
+    int success {ca_poly_rem(poly, A.unwrap(), B.unwrap(), ctx())};
     return success == 1;
 }
 
 bool CaPolyXX::rem(CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
 {
-    int success = ca_poly_rem(R.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap());
+    int success {ca_poly_rem(R.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap())};
     return success == 1;
 }
 
@@ -116,13 +116,13 @@ void CaPolyXX::mul(CaPolyXX & product, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctx
 
 bool CaPolyXX::divrem(CaPolyXX & Q, CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
 {
-    int success = ca_poly_divrem(Q.unwrap() , R.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap());
+    int success {ca_poly_divrem(Q.unwrap() , R.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap())};
     return success == 1;
 }
 
 bool CaPolyXX::gcd(CaPolyXX & gcd, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
 {
-    int success = ca_poly_gcd(gcd.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap());
+    int success {ca_poly_gcd(gcd.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap())};
     return success == 1;
 }
 
