@@ -3,6 +3,7 @@
 
 #include "../include/srs.hpp"
 #include "../include/xsrs.hpp"
+#include "../include/basic_constructible.hpp"
 
 void test_SRemS()
 {
@@ -120,8 +121,43 @@ CaCtxXX ctxXX;
 
 }
 
+void testBasicConstructible()
+{
+    CaCtxXX ctxXX;
+
+    CaXX one {ctxXX};
+    CaXX two {ctxXX};
+    CaXX minus_one {ctxXX};
+
+    one.set_si(1);
+    two.set_si(2);
+    minus_one.set_si(-1);
+    
+    CaPolyXX P {ctxXX};
+    CaPolyXX Q {ctxXX};
+    P.set_name("P");
+    Q.set_name("Q");
+    
+    // P = X^2 +2X +1
+    P.set_coeff_ca(0, one);
+    P.set_coeff_ca(1, two);
+    P.set_coeff_ca(2, one);
+
+    // Q = X^2 -1
+    Q.set_coeff_ca(0, minus_one);
+    Q.set_coeff_ca(2, one);
+
+    BasicConstructible bc {ctxXX};
+    bc.add_poly_to_annihilate(P);
+    bc.add_poly_not_to_annihilate(Q);
+
+    std::cout << std::boolalpha;
+    bool empty {bc.is_empty()};
+    std::cout << "Empty: " << empty << std::endl;
+}
+
 int main()
 {
-    testDegree();
+    testBasicConstructible();
     return 0;
 }
