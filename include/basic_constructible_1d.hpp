@@ -12,10 +12,13 @@ private:
 
     bool polys_not_to_annihilate_has_zero {false};
 
+    void destruct_polys(std::list<CaPolyXX *> & polys);
+
     void compute_power_of_product_of_polys_not_to_annihilate(CaPolyXX & product, slong power);
 
 public:
     BasicConstructible1D(CaCtxXX & ctxXX);
+    ~BasicConstructible1D();
     void print_polys();
     void add_poly_to_annihilate(CaPolyXX & P);
     void add_poly_not_to_annihilate(CaPolyXX & Q);

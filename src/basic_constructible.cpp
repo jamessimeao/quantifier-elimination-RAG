@@ -5,6 +5,20 @@ BasicConstructible1D::BasicConstructible1D(CaCtxXX & ctxXX)
     ctxXX_ptr = &ctxXX;
 }
 
+BasicConstructible1D::~BasicConstructible1D()
+{
+    destruct_polys(polys_to_annihilate);
+    destruct_polys(polys_not_to_annihilate);
+}
+
+void BasicConstructible1D::destruct_polys(std::list<CaPolyXX *> & polys)
+{
+    for(CaPolyXX * poly_ptr : polys)
+    {
+        poly_ptr->~CaPolyXX();
+    }
+}
+
 void BasicConstructible1D::print_polys()
 {
     std::cout << "Polynomials to annihilate:\n";
@@ -56,6 +70,7 @@ void BasicConstructible1D::add_poly_not_to_annihilate(CaPolyXX & Q)
             if(!polys_not_to_annihilate_has_zero)
             {
                 polys_not_to_annihilate_has_zero = true;
+                destruct_polys(polys_not_to_annihilate);
                 polys_not_to_annihilate.empty();
                 polys_not_to_annihilate.push_back(Q_copy_ptr);
             }
