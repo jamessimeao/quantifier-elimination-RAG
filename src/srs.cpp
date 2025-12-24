@@ -98,7 +98,7 @@ size_t SRemS::get_gcd_index()
     return gcd_index;
 }
 
-CaPolyXX & SRemS::gcd()
+void SRemS::compute_gcd(CaPolyXX & gcd)
 {
-    return *sequence[gcd_index];
+    gcd.copy(*sequence[gcd_index]);
 }

@@ -142,10 +142,10 @@ size_t XSRemS::get_gcd_index()
     return gcd_index;
 }
 
-CaPolyXX & XSRemS::gcd()
+void XSRemS::compute_gcd(CaPolyXX & gcd)
 {
     CaPolyXX * gcd_ptr {std::get<0>(sequence[gcd_index])};
-    return *gcd_ptr;
+    gcd.copy(*gcd_ptr);
 }
 
 void XSRemS::compute_mdc(CaPolyXX & mdc)

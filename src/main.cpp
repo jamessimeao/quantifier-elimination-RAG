@@ -41,7 +41,8 @@ void test_SRemS()
 
     std::cout << "Print the gcd" << std::endl;
 
-    CaPolyXX & gcd {srs.gcd()};
+    CaPolyXX gcd = CaPolyXX(ctxXX);
+    srs.compute_gcd(gcd);
     gcd.println();
 
     std::cout << "Finished." << std::endl;
@@ -84,7 +85,8 @@ void test_XSRemS()
 
     std::cout << "Print the gcd" << std::endl;
 
-    CaPolyXX & gcd {srs.gcd()};
+    CaPolyXX gcd = CaPolyXX(ctxXX);
+    srs.compute_gcd(gcd);
     gcd.println();
 
     std::cout << "Finished." << std::endl;

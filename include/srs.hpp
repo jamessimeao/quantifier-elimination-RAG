@@ -13,5 +13,5 @@ public:
     SRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX);
     ~SRemS();
     size_t get_gcd_index();
-    CaPolyXX & gcd();
+    void compute_gcd(CaPolyXX & gcd);
 };
