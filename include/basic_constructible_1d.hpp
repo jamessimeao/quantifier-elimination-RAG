@@ -10,6 +10,8 @@ private:
     std::list<CaPolyXX *> polys_not_to_annihilate;
     CaCtxXX * ctxXX_ptr;
 
+    bool polys_not_to_annihilate_has_zero {false};
+
     void compute_power_of_product_of_polys_not_to_annihilate(CaPolyXX & product, slong power);
 
 public:

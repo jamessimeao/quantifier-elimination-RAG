@@ -27,7 +27,7 @@ void BasicConstructible1D::add_poly_to_annihilate(CaPolyXX & P)
     switch(is_zero)
     {
         case T_UNKNOWN:
-            throw std::runtime_error("Error: Failed to check if polynomial is zero.");
+            throw std::runtime_error("Error: Failed to check if polynomial is zero in add_poly_to_annihilate.\n");
         case T_FALSE:
             polys_to_annihilate.push_back(&P);
             break;
@@ -40,7 +40,25 @@ void BasicConstructible1D::add_poly_to_annihilate(CaPolyXX & P)
 
 void BasicConstructible1D::add_poly_not_to_annihilate(CaPolyXX & Q)
 {
-    polys_to_annihilate.push_back(&Q);
+    // If Q is zero, only store the zero polynomial
+    truth_t is_zero {Q.check_is_zero()};
+    switch(is_zero)
+    {
+        case T_UNKNOWN:
+            throw std::runtime_error("Error: Failed to check if polynomial is zero in add_poly_not_to_annihilate.\n");
+        case T_FALSE:
+            polys_to_annihilate.push_back(&Q);
+            break;
+        case T_TRUE:
+            std::cout << "Adding a zero polynomial in add_poly_not_to_annihilate. Will only keep the zero polynomial.\n";
+            if(!polys_not_to_annihilate_has_zero)
+            {
+                polys_not_to_annihilate_has_zero = true;
+                polys_not_to_annihilate.empty();
+                polys_not_to_annihilate.push_back(&Q);
+            }
+            break;
+    }
 }
 
 void BasicConstructible1D::compute_power_of_product_of_polys_not_to_annihilate(CaPolyXX & product, slong power)
