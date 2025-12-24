@@ -38,12 +38,12 @@ void BasicConstructible1D::add_poly_to_annihilate(CaPolyXX & P)
 {
     // only add non zero polynomials
     truth_t is_zero {P.check_is_zero()};
+    CaPolyXX * P_copy_ptr {new CaPolyXX(P)};
     switch(is_zero)
     {
         case T_UNKNOWN:
             throw std::runtime_error("Error: Failed to check if polynomial is zero in add_poly_to_annihilate.\n");
         case T_FALSE:
-            CaPolyXX * P_copy_ptr {new CaPolyXX(P)};
             polys_to_annihilate.push_back(P_copy_ptr);
             break;
         case T_TRUE:
