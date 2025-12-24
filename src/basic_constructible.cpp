@@ -71,7 +71,7 @@ void BasicConstructible1D::add_poly_not_to_annihilate(CaPolyXX & Q)
             {
                 polys_not_to_annihilate_has_zero = true;
                 destruct_polys(polys_not_to_annihilate);
-                polys_not_to_annihilate.empty();
+                polys_not_to_annihilate.clear();
                 polys_not_to_annihilate.push_back(Q_copy_ptr);
             }
             break;
