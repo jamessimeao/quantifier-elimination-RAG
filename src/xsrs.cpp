@@ -2,6 +2,8 @@
 
 XSRemS::XSRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
 {
+    ctxXX_ptr = &ctxXX;
+
     truth_t P_is_zero {P.check_is_zero()};
     truth_t Q_is_zero {Q.check_is_zero()};
 
@@ -144,4 +146,14 @@ CaPolyXX & XSRemS::gcd()
 {
     CaPolyXX * gcd_ptr {std::get<0>(sequence[gcd_index])};
     return *gcd_ptr;
+}
+
+void XSRemS::compute_mdc(CaPolyXX & mdc)
+{
+    // U[k+1]P = -V[k+1]Q, and both sides are an mdc of P and Q.
+    // Here k is the index of the gcd.
+    // I'll use U[k+1]P.
+    CaPolyXX * P_ptr {std::get<0>(sequence[0])};
+    CaPolyXX * U_ptr {std::get<1>(sequence[gcd_index+1])};
+    CaPolyXX::mul(mdc, *U_ptr, *P_ptr, *ctxXX_ptr);
 }
