@@ -30,6 +30,7 @@ public:
     bool compute_degree();
     slong get_degree(); 
 
+    void copy(CaPolyXX & A);
     void set_coeff_ca(slong n, CaXX& x);
     void set_si(slong x);
     void set_to_neg();

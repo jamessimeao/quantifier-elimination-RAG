@@ -9,8 +9,7 @@ CaPolyXX::CaPolyXX(CaCtxXX & ctxXX)
 
 CaPolyXX::CaPolyXX(CaPolyXX & P)
 {
-    ctxXX_ptr = P.ctxXX_ptr;
-    ca_poly_set(poly, P.unwrap(), ctx());
+    copy(P);
 }
     
 CaPolyXX::~CaPolyXX()
@@ -65,6 +64,13 @@ slong CaPolyXX::get_degree()
 ca_ctx_t & CaPolyXX::ctx()
 {
     return ctxXX_ptr->unwrap();
+}
+
+// Copy ca_poly and ctx, but don't copy the name
+void CaPolyXX::copy(CaPolyXX & A)
+{
+    ctxXX_ptr = A.ctxXX_ptr;
+    ca_poly_set(poly, A.unwrap(), ctx());
 }
 
 void CaPolyXX::set_coeff_ca(slong n, CaXX & x)
