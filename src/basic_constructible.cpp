@@ -88,6 +88,23 @@ void BasicConstructible1D::compute_power_of_product_of_polys_not_to_annihilate(C
 
 bool BasicConstructible1D::is_empty()
 {
+    // Degerate cases first
+    if(polys_not_to_annihilate_has_zero)
+    {
+        return true;
+    }
+
+    // polys_not_to_annihilate_has_zero = false
+    if(polys_to_annihilate.size() == 0)
+    {
+        return false;
+    }
+
+    // Now we have
+    // polys_not_to_annihilate_has_zero = false,
+    // polys_to_annihilate.size() > 0, without zero polynomials.
+    // This guarantees that all gcds below exist and are not 0.
+
     CaPolyXX gcd_bigger_degree {*ctxXX_ptr};
     bool successful {CaPolyXX::compute_gcd_of_polys(gcd_bigger_degree, polys_to_annihilate, *ctxXX_ptr)};
     if(!successful)
