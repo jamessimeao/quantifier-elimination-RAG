@@ -29,7 +29,8 @@ void BasicConstructible1D::add_poly_to_annihilate(CaPolyXX & P)
         case T_UNKNOWN:
             throw std::runtime_error("Error: Failed to check if polynomial is zero in add_poly_to_annihilate.\n");
         case T_FALSE:
-            polys_to_annihilate.push_back(&P);
+            CaPolyXX * P_copy_ptr {new CaPolyXX(P)};
+            polys_to_annihilate.push_back(P_copy_ptr);
             break;
         case T_TRUE:
             std::cout << "Won't add zero polynomial to polynomials to annihilate\n";
@@ -42,12 +43,13 @@ void BasicConstructible1D::add_poly_not_to_annihilate(CaPolyXX & Q)
 {
     // If Q is zero, only store the zero polynomial
     truth_t is_zero {Q.check_is_zero()};
+    CaPolyXX * Q_copy_ptr {new CaPolyXX(Q)};
     switch(is_zero)
     {
         case T_UNKNOWN:
             throw std::runtime_error("Error: Failed to check if polynomial is zero in add_poly_not_to_annihilate.\n");
         case T_FALSE:
-            polys_to_annihilate.push_back(&Q);
+            polys_to_annihilate.push_back(Q_copy_ptr);
             break;
         case T_TRUE:
             std::cout << "Adding a zero polynomial in add_poly_not_to_annihilate. Will only keep the zero polynomial.\n";
@@ -55,7 +57,7 @@ void BasicConstructible1D::add_poly_not_to_annihilate(CaPolyXX & Q)
             {
                 polys_not_to_annihilate_has_zero = true;
                 polys_not_to_annihilate.empty();
-                polys_not_to_annihilate.push_back(&Q);
+                polys_not_to_annihilate.push_back(Q_copy_ptr);
             }
             break;
     }
