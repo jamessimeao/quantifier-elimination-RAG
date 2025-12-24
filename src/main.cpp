@@ -81,12 +81,12 @@ void test_XSRemS()
     std::cout << "Computing SRemS" << std::endl;
 
     // Extended signed remainder sequence
-    XSRemS srs {P, Q, ctxXX};
+    XSRemS xsrs {P, Q, ctxXX};
 
     std::cout << "Print the gcd" << std::endl;
 
     CaPolyXX gcd = CaPolyXX(ctxXX);
-    srs.compute_gcd(gcd);
+    xsrs.compute_gcd(gcd);
     gcd.println();
 
     std::cout << "Finished." << std::endl;
