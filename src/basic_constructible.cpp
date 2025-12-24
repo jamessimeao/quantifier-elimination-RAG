@@ -22,7 +22,20 @@ void BasicConstructible1D::print_polys()
 
 void BasicConstructible1D::add_poly_to_annihilate(CaPolyXX & P)
 {
-    polys_to_annihilate.push_back(&P);
+    // only add non zero polynomials
+    truth_t is_zero {P.check_is_zero()};
+    switch(is_zero)
+    {
+        case T_UNKNOWN:
+            throw std::runtime_error("Error: Failed to check if polynomial is zero.");
+        case T_FALSE:
+            polys_to_annihilate.push_back(&P);
+            break;
+        case T_TRUE:
+            std::cout << "Won't add zero polynomial to polynomials to annihilate\n";
+            break;
+    }
+    
 }
 
 void BasicConstructible1D::add_poly_not_to_annihilate(CaPolyXX & Q)
