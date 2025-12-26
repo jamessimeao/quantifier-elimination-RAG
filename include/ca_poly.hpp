@@ -47,4 +47,7 @@ public:
 
     static void mul_polys(CaPolyXX & product, std::list<CaPolyXX *> & polys, CaCtxXX & ctxXX);
     static bool compute_gcd_of_polys(CaPolyXX & gcd, std::list<CaPolyXX *> & polys, CaCtxXX & ctxXX);
+
+    // Signed pseudo remainder (why signed, if there is no sign?)
+    static bool compute_prem(CaPolyXX & prem, CaPolyXX & P, CaPolyXX & Q, slong degQ, CaCtxXX & ctxXX);
 };

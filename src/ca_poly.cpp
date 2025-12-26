@@ -167,3 +167,16 @@ bool CaPolyXX::compute_gcd_of_polys(CaPolyXX & gcd, std::list<CaPolyXX *> & poly
     }
     return true;
 }
+
+// Signed pseudo remainder (why signed, if there is no sign?).
+// It assumes that the degree of Q is know, and it is passed as an argument.
+bool CaPolyXX::compute_prem(CaPolyXX & prem, CaPolyXX & P, CaPolyXX & Q, slong degQ, CaCtxXX & ctxXX)
+{
+    // Make a copy of P, so that we don't change P
+    CaPolyXX P_multiple {P};
+    // Multiply P_multiple by the leading coefficient of Q
+    ca_poly_mul_ca(P_multiple.unwrap(), P_multiple.unwrap(), &P.unwrap()->coeffs[degQ], ctxXX.unwrap());
+    // Set prem to the remainder of the division of P_multiple by Q
+    bool success {CaPolyXX::rem(prem, P_multiple, Q, ctxXX)};
+    return success;
+}
