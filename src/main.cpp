@@ -5,6 +5,8 @@
 #include "../include/srs.hpp"
 #include "../include/xsrs.hpp"
 #include "../include/basic_constructible_1d.hpp"
+#include "../include/complex_mpoly.hpp"
+#include "../include/gr_complex_ctx.hpp"
 
 void test_SRemS()
 {
@@ -166,8 +168,24 @@ void testBasicConstructible1D()
     std::cout << "Empty: " << empty << std::endl;
 }
 
+void testComplexMPoly()
+{
+    // Complex numbers
+    GRComplexCtx CC {};
+    // Complex Polynomials with 2 variables
+    ComplexMPolyCtx ctx  = ComplexMPolyCtx(CC, 2);
+    // A complex polynomial with 2 variables
+    ComplexMPoly P {ctx};
+    // Set P to 3 * x1^5 * x2^7
+    ulong exp[] = {5,7};
+    P.set_coeff_si(3,exp);
+    // Print the polynomial
+    P.println();
+}
+
 int main()
 {
-    testBasicConstructible1D();
+    testComplexMPoly();
+
     return 0;
 }
