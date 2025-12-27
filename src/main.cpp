@@ -177,9 +177,8 @@ void testComplexMPoly()
     // A complex polynomial with 2 variables
     ComplexMPoly P {ctx};
     // Set P to 3 * x1^5 * x2^7
-    ulong exp[] = {5,7};
-    bool success;
-    success = P.set_coeff_si(3,exp);
+    ulong exp[] = {5, 7};
+    bool success {P.set_coeff_si(3, exp)};
     if(!success)
     {
         throw std::runtime_error("Failed to set coeff.");
