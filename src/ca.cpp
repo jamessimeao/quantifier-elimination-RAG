@@ -1,35 +1,35 @@
 #include "../include/ca.hpp"
 
-CaXX::CaXX(CaCtxXX & ctxXX)
+Ca::Ca(CaCtx & ctx)
 {
-    std::cout << "Initilizing CaXX...\n";
-    ca_init(x, ctxXX.unwrap());
-    ctxXX_ptr = &ctxXX;
+    std::cout << "Initilizing Ca...\n";
+    ca_init(x, ctx.unwrap());
+    ctx_ptr = &ctx;
 }
 
-CaXX::~CaXX()
+Ca::~Ca()
 {
-    std::cout << "Destructing CaXX...\n";
-    ca_clear(x, ctx());
+    std::cout << "Destructing Ca...\n";
+    ca_clear(x, ctxUnwrap());
 }
 
-void CaXX::println()
+void Ca::println()
 {
-    ca_print(x, ctx());
+    ca_print(x, ctxUnwrap());
     std::cout << "\n";
 }
 
-ca_ctx_t & CaXX::ctx()
+ca_ctx_t & Ca::ctxUnwrap()
 {
-    return ctxXX_ptr->unwrap();
+    return ctx_ptr->unwrap();
 }
 
-ca_t & CaXX::unwrap()
+ca_t & Ca::unwrap()
 {
     return x;
 }
 
-void CaXX::set_si(slong v)
+void Ca::set_si(slong v)
 {
-    ca_set_si(x, v, ctxXX_ptr->unwrap());
+    ca_set_si(x, v, ctx_ptr->unwrap());
 }

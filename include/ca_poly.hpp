@@ -5,21 +5,21 @@
 #include <list>
 
 // C++ wrapper for ca_poly_t
-class CaPolyXX
+class CaPoly
 {
 private:
     ca_poly_t poly;
 
-    CaCtxXX * ctxXX_ptr;
-    ca_ctx_t & ctx();
+    CaCtx * ctx_ptr;
+    ca_ctx_t & ctxUnwrap();
 
     std::string name;
 
     slong degree;
 public:
-    CaPolyXX(CaCtxXX & ctxXX);
-    CaPolyXX(CaPolyXX & P);
-    ~CaPolyXX();
+    CaPoly(CaCtx & ctx);
+    CaPoly(CaPoly & P);
+    ~CaPoly();
     ca_poly_t & unwrap();
 
     void set_name(std::string_view new_name);
@@ -30,24 +30,24 @@ public:
     bool compute_degree();
     slong get_degree(); 
 
-    void copy(CaPolyXX & A);
-    void set_coeff_ca(slong n, CaXX& x);
+    void copy(CaPoly & A);
+    void set_coeff_ca(slong n, Ca& x);
     void set_si(slong x);
     void set_to_neg();
-    bool set_to_rem(CaPolyXX & A, CaPolyXX & B);
+    bool set_to_rem(CaPoly & A, CaPoly & B);
 
-    static void neg(CaPolyXX & minusA, CaPolyXX & A, CaCtxXX & ctxXX);
-    static void add(CaPolyXX & sum, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
-    static void sub(CaPolyXX & difference, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
-    static void mul(CaPolyXX & product, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
-    static void pow(CaPolyXX & result, CaPolyXX & A, size_t n, CaCtxXX & ctxXX);
-    static bool rem(CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
-    static bool divrem(CaPolyXX & Q, CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
-    static bool gcd(CaPolyXX & gcd, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX);
+    static void neg(CaPoly & minusA, CaPoly & A, CaCtx & ctx);
+    static void add(CaPoly & sum, CaPoly & A, CaPoly & B, CaCtx & ctx);
+    static void sub(CaPoly & difference, CaPoly & A, CaPoly & B, CaCtx & ctx);
+    static void mul(CaPoly & product, CaPoly & A, CaPoly & B, CaCtx & ctx);
+    static void pow(CaPoly & result, CaPoly & A, size_t n, CaCtx & ctx);
+    static bool rem(CaPoly & R, CaPoly & A, CaPoly & B, CaCtx & ctx);
+    static bool divrem(CaPoly & Q, CaPoly & R, CaPoly & A, CaPoly & B, CaCtx & ctx);
+    static bool gcd(CaPoly & gcd, CaPoly & A, CaPoly & B, CaCtx & ctx);
 
-    static void mul_polys(CaPolyXX & product, std::list<CaPolyXX *> & polys, CaCtxXX & ctxXX);
-    static bool compute_gcd_of_polys(CaPolyXX & gcd, std::list<CaPolyXX *> & polys, CaCtxXX & ctxXX);
+    static void mul_polys(CaPoly & product, std::list<CaPoly *> & polys, CaCtx & ctx);
+    static bool compute_gcd_of_polys(CaPoly & gcd, std::list<CaPoly *> & polys, CaCtx & ctx);
 
     // Signed pseudo remainder (why signed, if there is no sign?)
-    static bool compute_prem(CaPolyXX & prem, CaPolyXX & P, CaPolyXX & Q, slong degQ, CaCtxXX & ctxXX);
+    static bool compute_prem(CaPoly & prem, CaPoly & P, CaPoly & Q, slong degQ, CaCtx & ctx);
 };

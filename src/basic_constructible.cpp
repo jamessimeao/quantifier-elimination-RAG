@@ -1,8 +1,8 @@
 #include "../include/basic_constructible_1d.hpp"
 
-BasicConstructible1D::BasicConstructible1D(CaCtxXX & ctxXX)
+BasicConstructible1D::BasicConstructible1D(CaCtx & ctx)
 {
-    ctxXX_ptr = &ctxXX;
+    ctx_ptr = &ctx;
 }
 
 BasicConstructible1D::~BasicConstructible1D()
@@ -11,34 +11,34 @@ BasicConstructible1D::~BasicConstructible1D()
     destruct_polys(polys_not_to_annihilate);
 }
 
-void BasicConstructible1D::destruct_polys(std::list<CaPolyXX *> & polys)
+void BasicConstructible1D::destruct_polys(std::list<CaPoly *> & polys)
 {
-    for(CaPolyXX * poly_ptr : polys)
+    for(CaPoly * poly_ptr : polys)
     {
-        poly_ptr->~CaPolyXX();
+        poly_ptr->~CaPoly();
     }
 }
 
 void BasicConstructible1D::print_polys()
 {
     std::cout << "Polynomials to annihilate:\n";
-    for(CaPolyXX * poly_ptr : polys_to_annihilate)
+    for(CaPoly * poly_ptr : polys_to_annihilate)
     {
         poly_ptr->println();
     }
 
     std::cout << "Polynomials not to annihilate:\n";
-    for(CaPolyXX * poly_ptr : polys_not_to_annihilate)
+    for(CaPoly * poly_ptr : polys_not_to_annihilate)
     {
         poly_ptr->println();
     }
 }
 
-void BasicConstructible1D::add_poly_to_annihilate(CaPolyXX & P)
+void BasicConstructible1D::add_poly_to_annihilate(CaPoly & P)
 {
     // only add non zero polynomials
     truth_t is_zero {P.check_is_zero()};
-    CaPolyXX * P_copy_ptr {new CaPolyXX(P)};
+    CaPoly * P_copy_ptr {new CaPoly(P)};
     switch(is_zero)
     {
         case T_UNKNOWN:
@@ -53,11 +53,11 @@ void BasicConstructible1D::add_poly_to_annihilate(CaPolyXX & P)
     
 }
 
-void BasicConstructible1D::add_poly_not_to_annihilate(CaPolyXX & Q)
+void BasicConstructible1D::add_poly_not_to_annihilate(CaPoly & Q)
 {
     // If Q is zero, only store the zero polynomial
     truth_t is_zero {Q.check_is_zero()};
-    CaPolyXX * Q_copy_ptr {new CaPolyXX(Q)};
+    CaPoly * Q_copy_ptr {new CaPoly(Q)};
     switch(is_zero)
     {
         case T_UNKNOWN:
@@ -78,12 +78,12 @@ void BasicConstructible1D::add_poly_not_to_annihilate(CaPolyXX & Q)
     }
 }
 
-void BasicConstructible1D::compute_power_of_product_of_polys_not_to_annihilate(CaPolyXX & product, slong power)
+void BasicConstructible1D::compute_power_of_product_of_polys_not_to_annihilate(CaPoly & product, slong power)
 {
     // First take the product of all polynomials in polys_not_to_annihilate
-    CaPolyXX::mul_polys(product, polys_not_to_annihilate, *ctxXX_ptr);
+    CaPoly::mul_polys(product, polys_not_to_annihilate, *ctx_ptr);
     // Then take the power
-    CaPolyXX::pow(product, product, power, *ctxXX_ptr);
+    CaPoly::pow(product, product, power, *ctx_ptr);
 }
 
 bool BasicConstructible1D::is_empty()
@@ -105,8 +105,8 @@ bool BasicConstructible1D::is_empty()
     // polys_to_annihilate.size() > 0, without zero polynomials.
     // This guarantees that all gcds below exist and are not 0.
 
-    CaPolyXX gcd_bigger_degree {*ctxXX_ptr};
-    bool successful {CaPolyXX::compute_gcd_of_polys(gcd_bigger_degree, polys_to_annihilate, *ctxXX_ptr)};
+    CaPoly gcd_bigger_degree {*ctx_ptr};
+    bool successful {CaPoly::compute_gcd_of_polys(gcd_bigger_degree, polys_to_annihilate, *ctx_ptr)};
     if(!successful)
     {
         throw std::runtime_error("Error: Failed to compute gcd of polynomials that shouldn't be annihilated.\n");
@@ -120,11 +120,11 @@ bool BasicConstructible1D::is_empty()
     slong bigger_degree {gcd_bigger_degree.get_degree()};
     slong d {bigger_degree + 1};
 
-    CaPolyXX product {*ctxXX_ptr};
+    CaPoly product {*ctx_ptr};
     compute_power_of_product_of_polys_not_to_annihilate(product, d);
 
-    CaPolyXX gcd_smaller_degree {*ctxXX_ptr};
-    successful = CaPolyXX::gcd(gcd_smaller_degree, gcd_bigger_degree, product, *ctxXX_ptr);
+    CaPoly gcd_smaller_degree {*ctx_ptr};
+    successful = CaPoly::gcd(gcd_smaller_degree, gcd_bigger_degree, product, *ctx_ptr);
     if(!successful)
     {
         throw std::runtime_error("Error: couldn't compute the gcd of smaller degree.\n");

@@ -1,8 +1,8 @@
 #include "../include/xsrs.hpp"
 
-XSRemS::XSRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
+XSRemS::XSRemS(CaPoly & P, CaPoly & Q, CaCtx & ctx)
 {
-    ctxXX_ptr = &ctxXX;
+    ctx_ptr = &ctx;
 
     truth_t P_is_zero {P.check_is_zero()};
     truth_t Q_is_zero {Q.check_is_zero()};
@@ -24,11 +24,11 @@ XSRemS::XSRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
 
     // Add the first polynomial of SRemS, which is P
     std::cout << "push_back" << std::endl;
-    CaPolyXX * P_copy_ptr {new CaPolyXX(P)};
+    CaPoly * P_copy_ptr {new CaPoly(P)};
     P_copy_ptr->set_name("SRemS_" + std::to_string(0));
-    CaPolyXX * U0_ptr {new CaPolyXX(ctxXX)};
+    CaPoly * U0_ptr {new CaPoly(ctx)};
     U0_ptr->set_si(1);
-    CaPolyXX * V0_ptr {new CaPolyXX(ctxXX)};
+    CaPoly * V0_ptr {new CaPoly(ctx)};
     V0_ptr->set_si(0);
     sequence.push_back(std::make_tuple(P_copy_ptr,U0_ptr,V0_ptr));
 
@@ -41,11 +41,11 @@ XSRemS::XSRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
 
     // Add the second polynomial of SRemS, which is Q
     std::cout << "push_back" << std::endl;
-    CaPolyXX * Q_copy_ptr {new CaPolyXX(Q)};
+    CaPoly * Q_copy_ptr {new CaPoly(Q)};
     Q_copy_ptr->set_name("SRemS_" + std::to_string(1));
-    CaPolyXX * U1_ptr {new CaPolyXX(ctxXX)};
+    CaPoly * U1_ptr {new CaPoly(ctx)};
     U1_ptr->set_si(0);
-    CaPolyXX * V1_ptr {new CaPolyXX(ctxXX)};
+    CaPoly * V1_ptr {new CaPoly(ctx)};
     V1_ptr->set_si(1);
     sequence.push_back(std::make_tuple(Q_copy_ptr,U1_ptr,V1_ptr));
 
@@ -54,47 +54,47 @@ XSRemS::XSRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
     // It will be returned by this function if there is no error.
     size_t i {1};
 
-    CaPolyXX quotient {ctxXX};
+    CaPoly quotient {ctx};
     quotient.set_name("quotient");
-    CaPolyXX signed_remainder {ctxXX};
+    CaPoly signed_remainder {ctx};
     signed_remainder.set_name("signed_remainder");
     truth_t zero_remainder;
-    std::tuple<CaPolyXX *, CaPolyXX *, CaPolyXX *> tuple;
+    std::tuple<CaPoly *, CaPoly *, CaPoly *> tuple;
     std::cout << "Entering while loop" << std::endl;
     while(true)
     {
         std::cout << "Computing remainder" << std::endl;
-        CaPolyXX * SRemS_i_minus_1_ptr = std::get<0>(sequence[i-1]);
-        CaPolyXX * SRemS_i_ptr = std::get<0>(sequence[i]);
-        bool success = CaPolyXX::divrem(quotient, signed_remainder,*SRemS_i_minus_1_ptr, *SRemS_i_ptr, ctxXX);
+        CaPoly * SRemS_i_minus_1_ptr = std::get<0>(sequence[i-1]);
+        CaPoly * SRemS_i_ptr = std::get<0>(sequence[i]);
+        bool success = CaPoly::divrem(quotient, signed_remainder,*SRemS_i_minus_1_ptr, *SRemS_i_ptr, ctx);
         if(!success)
         {
             throw std::runtime_error("Error in XSRemS constructor: failed to compute remainder.\n");
         }
         
-        CaPolyXX * U_i_minus_1_ptr = std::get<1>(sequence[i-1]);
-        CaPolyXX * U_i_ptr = std::get<1>(sequence[i]);
-        CaPolyXX * V_i_minus_1_ptr = std::get<2>(sequence[i-1]);
-        CaPolyXX * V_i_ptr = std::get<2>(sequence[i]);
+        CaPoly * U_i_minus_1_ptr = std::get<1>(sequence[i-1]);
+        CaPoly * U_i_ptr = std::get<1>(sequence[i]);
+        CaPoly * V_i_minus_1_ptr = std::get<2>(sequence[i-1]);
+        CaPoly * V_i_ptr = std::get<2>(sequence[i]);
 
         zero_remainder = signed_remainder.check_is_zero();
         // multiply the remainder by -1
         signed_remainder.set_to_neg();
-        CaPolyXX * signed_remainder_copy_ptr = new CaPolyXX(signed_remainder);
+        CaPoly * signed_remainder_copy_ptr = new CaPoly(signed_remainder);
 
         std::cout << "Computing U..." << std::endl;
         // U[i+1] = quotient*U[i] -U[i-1]
-        CaPolyXX * U_ptr {new CaPolyXX(ctxXX)};
+        CaPoly * U_ptr {new CaPoly(ctx)};
         std::cout << "Multiplying polynomials" << std::endl; 
-        CaPolyXX::mul(*U_ptr, quotient, *U_i_ptr, ctxXX);
+        CaPoly::mul(*U_ptr, quotient, *U_i_ptr, ctx);
         std::cout << "Subtracting polynomials" << std::endl;
-        CaPolyXX::sub(*U_ptr, *U_ptr, *U_i_minus_1_ptr, ctxXX);
+        CaPoly::sub(*U_ptr, *U_ptr, *U_i_minus_1_ptr, ctx);
 
         std::cout << "Computing V..." << std::endl;
         // V[i+1] = quotient*V[i] -V[i-1]
-        CaPolyXX * V_ptr {new CaPolyXX(ctxXX)};
-        CaPolyXX::mul(*V_ptr, quotient, *V_i_ptr, ctxXX);
-        CaPolyXX::sub(*V_ptr, *V_ptr, *V_i_minus_1_ptr, ctxXX);
+        CaPoly * V_ptr {new CaPoly(ctx)};
+        CaPoly::mul(*V_ptr, quotient, *V_i_ptr, ctx);
+        CaPoly::sub(*V_ptr, *V_ptr, *V_i_minus_1_ptr, ctx);
 
         // Make the tuple that will be stored in the extended signed remainder sequence
         tuple = std::make_tuple(signed_remainder_copy_ptr, U_ptr, V_ptr);
@@ -127,12 +127,12 @@ XSRemS::XSRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX)
 XSRemS::~XSRemS()
 {
     std::cout << "Destructing XSRemS...\n";
-    for(std::tuple<CaPolyXX *, CaPolyXX *, CaPolyXX *> & tuple : sequence)
+    for(std::tuple<CaPoly *, CaPoly *, CaPoly *> & tuple : sequence)
     {
         // Can't just use a for loop here, without some workaround
-        std::get<0>(tuple)->~CaPolyXX();
-        std::get<1>(tuple)->~CaPolyXX();
-        std::get<2>(tuple)->~CaPolyXX();
+        std::get<0>(tuple)->~CaPoly();
+        std::get<1>(tuple)->~CaPoly();
+        std::get<2>(tuple)->~CaPoly();
     }
     std::cout << "Finished destructing XSRemS\n";
 }
@@ -142,18 +142,18 @@ size_t XSRemS::get_gcd_index()
     return gcd_index;
 }
 
-void XSRemS::compute_gcd(CaPolyXX & gcd)
+void XSRemS::compute_gcd(CaPoly & gcd)
 {
-    CaPolyXX * gcd_ptr {std::get<0>(sequence[gcd_index])};
+    CaPoly * gcd_ptr {std::get<0>(sequence[gcd_index])};
     gcd.copy(*gcd_ptr);
 }
 
-void XSRemS::compute_mdc(CaPolyXX & mdc)
+void XSRemS::compute_mdc(CaPoly & mdc)
 {
     // U[k+1]P = -V[k+1]Q, and both sides are an mdc of P and Q.
     // Here k is the index of the gcd.
     // I'll use U[k+1]P.
-    CaPolyXX * P_ptr {std::get<0>(sequence[0])};
-    CaPolyXX * U_ptr {std::get<1>(sequence[gcd_index+1])};
-    CaPolyXX::mul(mdc, *U_ptr, *P_ptr, *ctxXX_ptr);
+    CaPoly * P_ptr {std::get<0>(sequence[0])};
+    CaPoly * U_ptr {std::get<1>(sequence[gcd_index+1])};
+    CaPoly::mul(mdc, *U_ptr, *P_ptr, *ctx_ptr);
 }

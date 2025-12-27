@@ -7,11 +7,11 @@
 class SRemS
 {
 private:
-    std::vector<CaPolyXX*> sequence;
+    std::vector<CaPoly*> sequence;
     size_t gcd_index;
 public:
-    SRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX);
+    SRemS(CaPoly & P, CaPoly & Q, CaCtx & ctx);
     ~SRemS();
     size_t get_gcd_index();
-    void compute_gcd(CaPolyXX & gcd);
+    void compute_gcd(CaPoly & gcd);
 };

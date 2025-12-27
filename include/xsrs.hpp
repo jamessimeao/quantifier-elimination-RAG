@@ -7,14 +7,14 @@
 class XSRemS
 {
 private:
-    CaCtxXX * ctxXX_ptr;
-    std::vector<std::tuple<CaPolyXX*, CaPolyXX*, CaPolyXX*>> sequence;
+    CaCtx * ctx_ptr;
+    std::vector<std::tuple<CaPoly*, CaPoly*, CaPoly*>> sequence;
     size_t gcd_index;
 
 public:
-    XSRemS(CaPolyXX & P, CaPolyXX & Q, CaCtxXX & ctxXX);
+    XSRemS(CaPoly & P, CaPoly & Q, CaCtx & ctx);
     ~XSRemS();
     size_t get_gcd_index();
-    void compute_gcd(CaPolyXX & gcd);
-    void compute_mdc(CaPolyXX & mdc);
+    void compute_gcd(CaPoly & gcd);
+    void compute_mdc(CaPoly & mdc);
 };

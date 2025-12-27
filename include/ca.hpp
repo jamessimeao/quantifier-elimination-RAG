@@ -4,15 +4,15 @@
 #include "ca_ctx.hpp"
 
 // C++ wrapper for ca_t
-class CaXX
+class Ca
 {
 private:
     ca_t x;
-    CaCtxXX * ctxXX_ptr;
-    ca_ctx_t & ctx();
+    CaCtx * ctx_ptr;
+    ca_ctx_t & ctxUnwrap();
 public:
-    CaXX(CaCtxXX & ctxXX);
-    ~CaXX();
+    Ca(CaCtx & ctx);
+    ~Ca();
     ca_t & unwrap();
     void set_si(slong v);
 

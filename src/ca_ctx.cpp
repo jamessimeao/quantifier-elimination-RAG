@@ -1,18 +1,18 @@
 #include "../include/ca_ctx.hpp"
 
-CaCtxXX::CaCtxXX()
+CaCtx::CaCtx()
 {
-    std::cout << "Initilizing CaCtxXX...\n";
+    std::cout << "Initilizing CaCtx...\n";
     ca_ctx_init(ctx);
 }
 
-CaCtxXX::~CaCtxXX()
+CaCtx::~CaCtx()
 {
-    std::cout << "Destructing CaCtxXX...\n";
+    std::cout << "Destructing CaCtx...\n";
     ca_ctx_clear(ctx);
 }
 
-ca_ctx_t & CaCtxXX::unwrap()
+ca_ctx_t & CaCtx::unwrap()
 {
     return ctx;
 }

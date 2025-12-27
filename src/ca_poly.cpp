@@ -1,49 +1,49 @@
 #include "../include/ca_poly.hpp"
 
-CaPolyXX::CaPolyXX(CaCtxXX & ctxXX)
+CaPoly::CaPoly(CaCtx & ctx)
 {
-    std::cout << "Initializing CaPolyXX...\n";
-    ca_poly_init(poly, ctxXX.unwrap());
-    ctxXX_ptr = &ctxXX;
+    std::cout << "Initializing CaPoly...\n";
+    ca_poly_init(poly, ctx.unwrap());
+    ctx_ptr = &ctx;
 }
 
-CaPolyXX::CaPolyXX(CaPolyXX & P)
+CaPoly::CaPoly(CaPoly & P)
 {
     copy(P);
 }
     
-CaPolyXX::~CaPolyXX()
+CaPoly::~CaPoly()
 {
-    std::cout << "Destructing CaPolyXX...\n";
+    std::cout << "Destructing CaPoly...\n";
     println();
-    ca_poly_clear(poly, ctx());
+    ca_poly_clear(poly, ctxUnwrap());
 }
 
-ca_poly_t & CaPolyXX::unwrap()
+ca_poly_t & CaPoly::unwrap()
 {
     return poly;
 }
 
-void CaPolyXX::set_name(std::string_view new_name)
+void CaPoly::set_name(std::string_view new_name)
 {
     name = new_name;
 }
 
-void CaPolyXX::println()
+void CaPoly::println()
 {
     std::cout << name << ":\n";
-    ca_poly_print(poly, ctx());
+    ca_poly_print(poly, ctxUnwrap());
 }
 
-truth_t CaPolyXX::check_is_zero()
+truth_t CaPoly::check_is_zero()
 {
-    return ca_poly_check_is_zero(poly, ctx());
+    return ca_poly_check_is_zero(poly, ctxUnwrap());
 }
 
 // returns true if successful
-bool CaPolyXX::compute_degree()
+bool CaPoly::compute_degree()
 {
-    bool is_proper {ca_poly_is_proper(poly, ctx()) == 1};
+    bool is_proper {ca_poly_is_proper(poly, ctxUnwrap()) == 1};
     if(is_proper)
     {
         degree = poly->length-1;
@@ -56,110 +56,110 @@ bool CaPolyXX::compute_degree()
 }
 
 // Should only be called after a call to compute_degree which returned true
-slong CaPolyXX::get_degree()
+slong CaPoly::get_degree()
 {
     return degree;
 }
 
-ca_ctx_t & CaPolyXX::ctx()
+ca_ctx_t & CaPoly::ctxUnwrap()
 {
-    return ctxXX_ptr->unwrap();
+    return ctx_ptr->unwrap();
 }
 
 // Copy ca_poly and ctx, but don't copy the name
-void CaPolyXX::copy(CaPolyXX & A)
+void CaPoly::copy(CaPoly & A)
 {
-    ctxXX_ptr = A.ctxXX_ptr;
-    ca_poly_set(poly, A.unwrap(), ctx());
+    ctx_ptr = A.ctx_ptr;
+    ca_poly_set(poly, A.unwrap(), ctxUnwrap());
 }
 
-void CaPolyXX::set_coeff_ca(slong n, CaXX & x)
+void CaPoly::set_coeff_ca(slong n, Ca & x)
 {
-    ca_poly_set_coeff_ca(poly, n, x.unwrap(), ctx());
+    ca_poly_set_coeff_ca(poly, n, x.unwrap(), ctxUnwrap());
 }
 
-void CaPolyXX::set_si(slong x)
+void CaPoly::set_si(slong x)
 {
-    ca_poly_set_si(poly, x, ctx());
+    ca_poly_set_si(poly, x, ctxUnwrap());
 }
 
-void CaPolyXX::set_to_neg()
+void CaPoly::set_to_neg()
 {
-    ca_poly_neg(poly,poly, ctx());
+    ca_poly_neg(poly,poly, ctxUnwrap());
 }
 
-bool CaPolyXX::set_to_rem(CaPolyXX & A, CaPolyXX & B)
+bool CaPoly::set_to_rem(CaPoly & A, CaPoly & B)
 {
-    int success {ca_poly_rem(poly, A.unwrap(), B.unwrap(), ctx())};
+    int success {ca_poly_rem(poly, A.unwrap(), B.unwrap(), ctxUnwrap())};
     return success == 1;
 }
 
-bool CaPolyXX::rem(CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
+bool CaPoly::rem(CaPoly & R, CaPoly & A, CaPoly & B, CaCtx & ctx)
 {
-    int success {ca_poly_rem(R.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap())};
+    int success {ca_poly_rem(R.unwrap(), A.unwrap(), B.unwrap(), ctx.unwrap())};
     return success == 1;
 }
 
-void CaPolyXX::neg(CaPolyXX & minusA, CaPolyXX & A, CaCtxXX & ctxXX)
+void CaPoly::neg(CaPoly & minusA, CaPoly & A, CaCtx & ctx)
 {
-    ca_poly_neg(minusA.unwrap(), A.unwrap(), ctxXX.unwrap());
+    ca_poly_neg(minusA.unwrap(), A.unwrap(), ctx.unwrap());
 }
 
-void CaPolyXX::add(CaPolyXX & sum, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
+void CaPoly::add(CaPoly & sum, CaPoly & A, CaPoly & B, CaCtx & ctx)
 {
-    ca_poly_add(sum.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap());
+    ca_poly_add(sum.unwrap(), A.unwrap(), B.unwrap(), ctx.unwrap());
 }
 
-void CaPolyXX::sub(CaPolyXX & difference, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
+void CaPoly::sub(CaPoly & difference, CaPoly & A, CaPoly & B, CaCtx & ctx)
 {
-    ca_poly_sub(difference.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap());
+    ca_poly_sub(difference.unwrap(), A.unwrap(), B.unwrap(), ctx.unwrap());
 }
 
-void CaPolyXX::mul(CaPolyXX & product, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
+void CaPoly::mul(CaPoly & product, CaPoly & A, CaPoly & B, CaCtx & ctx)
 {
-    ca_poly_mul(product.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap());
+    ca_poly_mul(product.unwrap(), A.unwrap(), B.unwrap(), ctx.unwrap());
 }
 
-void CaPolyXX::pow(CaPolyXX & result, CaPolyXX & A, size_t n, CaCtxXX & ctxXX)
+void CaPoly::pow(CaPoly & result, CaPoly & A, size_t n, CaCtx & ctx)
 {
     result.set_si(1);
     for(size_t i {0}; i < n; i++)
     {
-        CaPolyXX::mul(result, result, A, ctxXX);
+        CaPoly::mul(result, result, A, ctx);
     }
 }
 
-bool CaPolyXX::divrem(CaPolyXX & Q, CaPolyXX & R, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
+bool CaPoly::divrem(CaPoly & Q, CaPoly & R, CaPoly & A, CaPoly & B, CaCtx & ctx)
 {
-    int success {ca_poly_divrem(Q.unwrap() , R.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap())};
+    int success {ca_poly_divrem(Q.unwrap() , R.unwrap(), A.unwrap(), B.unwrap(), ctx.unwrap())};
     return success == 1;
 }
 
-bool CaPolyXX::gcd(CaPolyXX & gcd, CaPolyXX & A, CaPolyXX & B, CaCtxXX & ctxXX)
+bool CaPoly::gcd(CaPoly & gcd, CaPoly & A, CaPoly & B, CaCtx & ctx)
 {
-    int success {ca_poly_gcd(gcd.unwrap(), A.unwrap(), B.unwrap(), ctxXX.unwrap())};
+    int success {ca_poly_gcd(gcd.unwrap(), A.unwrap(), B.unwrap(), ctx.unwrap())};
     return success == 1;
 }
 
-void CaPolyXX::mul_polys(CaPolyXX & product, std::list<CaPolyXX *> & polys, CaCtxXX & ctxXX)
+void CaPoly::mul_polys(CaPoly & product, std::list<CaPoly *> & polys, CaCtx & ctx)
 {
     product.set_si(1);
-    for(CaPolyXX * poly_ptr : polys)
+    for(CaPoly * poly_ptr : polys)
     {
-        CaPolyXX::mul(product, product, *poly_ptr, ctxXX);
+        CaPoly::mul(product, product, *poly_ptr, ctx);
     }
 }
 
 // Tries to compute the gcd of polys. Returns true if successful.
 // It doesn't check if a polynomial is zero before computing the gcd.
 // It may be necessary to first discard the zero polynomials from polys before calling this function.
-bool CaPolyXX::compute_gcd_of_polys(CaPolyXX & gcd, std::list<CaPolyXX *> & polys, CaCtxXX & ctxXX)
+bool CaPoly::compute_gcd_of_polys(CaPoly & gcd, std::list<CaPoly *> & polys, CaCtx & ctx)
 {
     gcd.set_si(0);
     bool successful;
-    for(CaPolyXX * poly_ptr : polys)
+    for(CaPoly * poly_ptr : polys)
     {
-        successful = CaPolyXX::gcd(gcd, gcd, *poly_ptr, ctxXX);
+        successful = CaPoly::gcd(gcd, gcd, *poly_ptr, ctx);
         if(!successful)
         {
             return false;
@@ -170,13 +170,13 @@ bool CaPolyXX::compute_gcd_of_polys(CaPolyXX & gcd, std::list<CaPolyXX *> & poly
 
 // Signed pseudo remainder (why signed, if there is no sign?).
 // It assumes that the degree of Q is know, and it is passed as an argument.
-bool CaPolyXX::compute_prem(CaPolyXX & prem, CaPolyXX & P, CaPolyXX & Q, slong degQ, CaCtxXX & ctxXX)
+bool CaPoly::compute_prem(CaPoly & prem, CaPoly & P, CaPoly & Q, slong degQ, CaCtx & ctx)
 {
     // Make a copy of P, so that we don't change P
-    CaPolyXX P_multiple {P};
+    CaPoly P_multiple {P};
     // Multiply P_multiple by the leading coefficient of Q
-    ca_poly_mul_ca(P_multiple.unwrap(), P_multiple.unwrap(), &P.unwrap()->coeffs[degQ], ctxXX.unwrap());
+    ca_poly_mul_ca(P_multiple.unwrap(), P_multiple.unwrap(), &P.unwrap()->coeffs[degQ], ctx.unwrap());
     // Set prem to the remainder of the division of P_multiple by Q
-    bool success {CaPolyXX::rem(prem, P_multiple, Q, ctxXX)};
+    bool success {CaPoly::rem(prem, P_multiple, Q, ctx)};
     return success;
 }
