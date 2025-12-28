@@ -22,4 +22,10 @@ public:
     void println();
 
     bool set_coeff_si(slong c, ulong * exp);
+    bool set_coeff_scalar(GR & c, const ulong * exp);
+
+    static bool neg(ComplexMPoly & minusPoly, ComplexMPoly & poly, ComplexMPolyCtx & ctx);
+    static bool add(ComplexMPoly & sum, ComplexMPoly & poly1, ComplexMPoly & poly2, ComplexMPolyCtx & ctx);
+    static bool sub(ComplexMPoly & difference, ComplexMPoly & poly1, ComplexMPoly & poly2, ComplexMPolyCtx & ctx);
+    static bool mul(ComplexMPoly & product, ComplexMPoly & poly1, ComplexMPoly & poly2, ComplexMPolyCtx & ctx);
 };
