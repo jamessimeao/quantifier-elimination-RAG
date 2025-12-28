@@ -12,5 +12,5 @@ protected:
     gr_ctx_t ctx;
 public:
     virtual ~GRCtx() = 0; // make the destructor abstract, so the class has to be inherited
-    gr_ctx_t & unwrap();
+    virtual gr_ctx_t & unwrap_gr();
 };

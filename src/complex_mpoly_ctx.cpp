@@ -4,7 +4,7 @@ ComplexMPolyCtx::ComplexMPolyCtx(GRCtx & ctx, const slong nvars)
 {
     ctx_ptr = &ctx;
     _nvars = nvars;
-    gr_mpoly_ctx_init(mpoly_ctx, ctx.unwrap(), nvars, ORD_DEGLEX);
+    gr_mpoly_ctx_init(mpoly_ctx, ctx.unwrap_gr(), nvars, ORD_DEGLEX);
 }
 
 ComplexMPolyCtx::~ComplexMPolyCtx()

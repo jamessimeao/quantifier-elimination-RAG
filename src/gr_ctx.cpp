@@ -4,10 +4,12 @@
 
 GRCtx::~GRCtx()
 {
-    gr_ctx_clear(ctx);
+    // Don't implement the destructor,
+    // because it can conflict with the child class destructor.
+    //gr_ctx_clear(ctx);
 }
 
-gr_ctx_t & GRCtx::unwrap()
+gr_ctx_t & GRCtx::unwrap_gr()
 {
     return ctx;
 }
