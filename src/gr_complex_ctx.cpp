@@ -7,4 +7,5 @@ GRComplexCtx::GRComplexCtx()
 
 GRComplexCtx::~GRComplexCtx()
 {
+    gr_ctx_clear(ctx);
 }
