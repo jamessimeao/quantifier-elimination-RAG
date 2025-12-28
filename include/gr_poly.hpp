@@ -3,6 +3,7 @@
 #include <iostream>
 #include "flint/gr_poly.h"
 #include "gr_ctx.hpp"
+#include "gr.hpp"
 
 // Wrapper class for gr_poly_t
 
@@ -19,5 +20,6 @@ public:
 
     void println();
 
-    bool set_coeff(slong exp, slong x);
+    bool set_coeff_si(slong exp, slong x);
+    bool set_coeff_scalar(slong exp, GR & x);
 };
