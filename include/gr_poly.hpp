@@ -22,4 +22,9 @@ public:
 
     bool set_coeff_si(slong exp, slong x);
     bool set_coeff_scalar(slong exp, GR & x);
+
+    static bool neg(GRPoly & minusPoly, GRPoly & poly, GRCtx & ctx);
+    static bool add(GRPoly & sum, GRPoly & poly1, GRPoly & poly2, GRCtx & ctx);
+    static bool sub(GRPoly & difference, GRPoly & poly1, GRPoly & poly2, GRCtx & ctx);
+    static bool mul(GRPoly & product, GRPoly & poly1, GRPoly & poly2, GRCtx & ctx);
 };
