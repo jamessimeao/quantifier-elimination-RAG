@@ -7,6 +7,7 @@
 #include "../include/basic_constructible_1d.hpp"
 #include "../include/complex_mpoly.hpp"
 #include "../include/gr_complex_ctx.hpp"
+#include "../include/gr_poly.hpp"
 
 void test_SRemS()
 {
@@ -187,9 +188,26 @@ void testComplexMPoly()
     P.println();
 }
 
+void testGRPoly()
+{
+    // Complex numbers
+    GRComplexCtx CC {};
+    // Complex polynomials
+    GRPoly P {CC};
+    // Set P to 1 +2*x +3*x^2
+    bool success {P.set_coeff(0,1)};
+    success = success && P.set_coeff(1,2);
+    success = success && P.set_coeff(2,3);
+    if(!success)
+    {
+        throw std::runtime_error("Failed to set coeff of P.");
+    }
+    // print P
+    P.println();
+}
+
 int main()
 {
-    testComplexMPoly();
-
+    testGRPoly();
     return 0;
 }
