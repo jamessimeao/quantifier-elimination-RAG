@@ -16,6 +16,11 @@ gr_mpoly_t & ComplexMPoly::unwrap()
     return poly;
 }
 
+gr_srcptr ComplexMPoly::unwrap_gr()
+{
+    return poly;
+}
+
 void ComplexMPoly::println()
 {
     gr_mpoly_print_pretty(poly, ctx_ptr->unwrap());
