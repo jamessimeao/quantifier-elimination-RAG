@@ -195,9 +195,9 @@ void testGRPoly()
     // Complex polynomials
     GRPoly P {CC};
     // Set P to 1 +2*x +3*x^2
-    bool success {P.set_coeff(0,1)};
-    success = success && P.set_coeff(1,2);
-    success = success && P.set_coeff(2,3);
+    bool success {P.set_coeff_si(0,1)};
+    success = success && P.set_coeff_si(1,2);
+    success = success && P.set_coeff_si(2,3);
     if(!success)
     {
         throw std::runtime_error("Failed to set coeff of P.");
@@ -206,8 +206,38 @@ void testGRPoly()
     P.println();
 }
 
+void testGRPolyOverPolynomialRing()
+{
+    // First create a Polynomial ring and a polynomial in it
+
+    // Complex numbers
+    GRComplexCtx CC {};
+    // Complex Polynomials with 2 variables
+    ComplexMPolyCtx ctx  = ComplexMPolyCtx(CC, 2);
+    // A complex polynomial with 2 variables
+    ComplexMPoly P {ctx};
+    // Set P to 3 * x1^5 * x2^7
+    
+    ulong exp[] = {5, 7};
+    bool success {P.set_coeff_si(3, exp)};
+    if(!success)
+    {
+        throw std::runtime_error("Failed to set coeff.");
+    }
+    // Print the polynomial
+    P.println();
+
+    // Then create a polynomial which has P as coefficient
+
+    GRPoly Q {ctx};
+    // Set Q to (3 * x1^5 * x2^7) * x^3
+    Q.set_coeff_scalar(3, P);
+    Q.println();
+}
+
 int main()
 {
-    testGRPoly();
+    testGRPolyOverPolynomialRing();
+
     return 0;
 }
