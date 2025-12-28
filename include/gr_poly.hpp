@@ -18,7 +18,7 @@ public:
     ~GRPoly();
     gr_poly_t & unwrap();
 
-    void println();
+    bool println();
 
     bool set_coeff_si(slong exp, slong x);
     bool set_coeff_scalar(slong exp, GR & x);

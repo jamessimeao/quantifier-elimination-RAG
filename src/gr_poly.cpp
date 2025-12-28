@@ -16,10 +16,11 @@ gr_poly_t & GRPoly::unwrap()
     return poly;
 }
 
-void GRPoly::println()
+bool GRPoly::println()
 {
-    gr_poly_print(poly, ctx_ptr->unwrap_gr());
+    bool res {gr_poly_print(poly, ctx_ptr->unwrap_gr()) == 0};
     std::cout << "\n";
+    return res;
 }
 
 bool GRPoly::set_coeff_si(slong exp, slong x)
