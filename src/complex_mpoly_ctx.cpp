@@ -16,3 +16,9 @@ gr_mpoly_ctx_t & ComplexMPolyCtx::unwrap()
 {
     return mpoly_ctx;
 }
+
+
+gr_ctx_t & ComplexMPolyCtx::unwrap_gr()
+{
+    return mpoly_ctx;
+}

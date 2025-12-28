@@ -7,7 +7,7 @@
 // but with complex coefficients as implemented by Calcium. That is,
 // gr_mpoly_ctx_t is constructed from a ca_ctx_t.
 
-class ComplexMPolyCtx
+class ComplexMPolyCtx : public GRCtx
 {
 private:
     GRCtx * ctx_ptr;
@@ -18,4 +18,6 @@ public:
     ComplexMPolyCtx(GRCtx & ctx, const slong nvars);
     ~ComplexMPolyCtx();
     gr_mpoly_ctx_t & unwrap();
+
+    gr_ctx_t & unwrap_gr() override;
 };
